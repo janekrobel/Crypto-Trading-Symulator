@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const sgMail = require('@sendgrid/mail');
 const cookieParser = require('cookie-parser');
 
+const middleware = require('./middleware/middleware.js');
 
 dotenv.config();
 
@@ -19,7 +20,8 @@ app.use(cors({
 }));
 
 app.post('/login', async (req,res) => {
-    const email = "robelkowo@gmail.com";
+    const email = req.body.email;
+    // check if in db 
     const token = jwt.sign({ email }, process.env.SECRETKEY);
     const loginLink = `https://localhost:3001/login?key=${token}`;
     sendLoginEmail(email, loginLink).then(() => {
@@ -57,24 +59,13 @@ const sendLoginEmail = async(_to, link) =>{
     });
 }
 
-const verifyToken = (req, res, next) => {
-    
-    const bearerHeader = req.headers['authorization'];
+app.post('/getToken', (req,res) => {
+    const email = req.body.email;
+    res.json(jwt.sign({ email }, process.env.SECRETKEY));
+});
 
-    if(typeof bearerHeader !== 'undefined'){
-        const bearer = bearerHeader.split('');
-        const bearerToken = bearer[1];
-
-        req.token = bearerToken;
-        next();
-
-        //add jwt.verify();
-    }
-    else{
-        res.sendStatus(403);
-    }
-
-}
+app.get('/getUser', middleware.verifyToken , (req,res) => {
+});
 
 
 
