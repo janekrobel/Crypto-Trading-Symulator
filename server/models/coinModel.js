@@ -11,7 +11,6 @@ exports.getCoinById = (id) => {
     })
 }
 
-
 exports.getAllCoins = () => {
     return db.promise().query('SELECT * FROM COINS ORDER BY marketCap').then((result, fields) => {
         console.log("DB: ", result[0]);
