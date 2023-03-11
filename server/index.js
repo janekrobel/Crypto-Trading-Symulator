@@ -5,6 +5,9 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const sgMail = require('@sendgrid/mail');
 const cookieParser = require('cookie-parser');
+const userRouting = require('./routings/userRouting.js');
+const positionRouting = require('./routings/coinRouting.js');
+const coinRouting = require('./routings/positionRouting.js');
 
 const middleware = require('./middleware/middleware.js');
 
@@ -12,8 +15,11 @@ dotenv.config();
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-
 app.use(cookieParser());
+
+app.use("coins", coinRouting);
+app.use("users", userRouting);
+app.use("positions", positionRouting);
 
 app.use(cors({
     origin: '*'
@@ -66,6 +72,7 @@ app.post('/getToken', (req,res) => {
 
 app.get('/getUser', middleware.verifyToken , (req,res) => {
 });
+
 
 
 

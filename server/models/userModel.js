@@ -12,7 +12,7 @@ exports.getUserById = (id) => {
 }
 
 exports.getUserByEmail = (email) => {
-    return db.promise().query('SELECT * FROM USERS WHERE emai = ?',[email]).then((result, fields) => {
+    return db.promise().query('SELECT * FROM USERS WHERE email = ?',[email]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -24,7 +24,7 @@ exports.getUserByEmail = (email) => {
 
 
 exports.createUser = (email) => {
-    return db.promise().query('INSERT INTO USERS (id,email,balance) VALUES (?,100.00)',[email]).then((result, fields) => {
+    return db.promise().query('INSERT INTO USERS (email,balance) VALUES (?,100.00)',[email]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -46,7 +46,7 @@ exports.getUserBalance = (id) => {
 }
 
 exports.setUserBalance = (id, balance) => {
-    return db.promise().query('SET balance = ? FROM USERS WHERE id = ?',[balance,id]).then((result, fields) => {
+    return db.promise().query('UPDATE USERS SET balance = ? WHERE id = ?',[balance,id]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
