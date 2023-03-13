@@ -1,22 +1,22 @@
 const model = require("../models/userModel.js");
 
 exports.getUserById = (request,response) => { 
-    response.json(model.getUserById(request.query.id));
+    model.getUserById(request.query.id).then((result)=>{ response.json(result)});
 }
 
 exports.getUserByEmail = (request,response) => { 
-    response.json(model.getUserByEmail(request.query.email));
+    model.getUserByEmail(request.query.email).then((result)=>{ response.json(result)});
 }
 
 exports.createUser = (request,response) => { 
-    response.json(model.createUser(request.body.email));
+    model.createUser(request.body.email).then((result)=>{ response.json(result)});
 }
 
 exports.getUserBalance = (request,response) => { 
-    response.json(model.getUserBalance(request.query.id));
+    model.getUserBalance(request.query.id).then((result)=>{ response.json(result)});
 }
 
 exports.setUserBalance = (request,response) => { 
-    response.json(model.setUserBalance(request.query.id, request.body.balance));
+    model.setUserBalance(request.query.id, request.body.balance).then((result)=>{ response.json(result)});
 }
 

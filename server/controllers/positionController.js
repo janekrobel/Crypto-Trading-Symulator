@@ -1,13 +1,13 @@
 const model = require("../models/positionModel.js");
 
 exports.getPositionsByUserId = (request, response) => {
-    response.json(model.getPositionsByUserId(request.query.userId));
+    model.getPositionsByUserId(request.query.userId).then((result)=>{ response.json(result)});
 }
 
 exports.createPositions = (request, response) => {
-    response.json(model.createPositions(request.body.id_user, request.body.amountid_coin, request.body.price, request.body.amount, request.body.date, request.body.type));
+    model.createPositions(request.body.id_user, request.body.amountid_coin, request.body.price, request.body.amount, request.body.date, request.body.type).then((result)=>{ response.json(result)});
 }
 
 exports.closePosition = (request, response) => {
-    response.json(model.closePosition(request.query.id));
+    model.closePosition(request.query.id).then((result)=>{ response.json(result)});
 }

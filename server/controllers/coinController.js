@@ -1,26 +1,18 @@
 const model = require("../models/coinModel.js");
 
-exports.getAllCoins = (request, response) => {
-    response.json(model.getAllCoins());
+
+exports.createCoin = () => {
+    model.createCoin(request.body.uuid, request.body.symbol, request.body.name, request.body.price,request.body.marcetCap,request.body.change, request.body.volume).then((result)=>{ response.json(result)});
 }
 
-exports.setPrice = (request, response) => {
-    response.json(model.setPrice(request.body.price, request.query.id));
+exports.getAllCoins = (request, response) => {
+    model.getAllCoins().then((result)=>{ response.json(result)});
+}
+
+exports.setCoin = (request, response) => {
+    model.setPrice(request.body.price,request.body.marcetCap,request.body.change, request.body.volume, request.query.id).then((result)=>{ response.json(result)});
 }
 
 exports.getCoinById = (request, response) => {
-    response.json(request.query.id);
-}
-
-exports.setMarketCap = (request, response) => {
-    response.json(model.setMarketCap(request.body.marketCap, request.query.id));
-}
-
-exports.setChange = (request, response) => {
-    response.json(model.setChange(request.body.change, request.query.id));
-}
-
-
-exports.setVolume = (request, response) => {
-    response.json(model.setVolume(request.body.price, request.query.id));
+    request.query.id.then((result)=>{ response.json(result)});
 }
