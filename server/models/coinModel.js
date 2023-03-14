@@ -12,8 +12,19 @@ exports.getAllCoins = () => {
     })
 }
 
-exports.setPrice = (price, id) => {
-    return db.promise().query('UPDATE COINS SET price = ? WHERE id = ?',[price,id]).then((result, fields) => {
+exports.createCoin = (coin) => {
+    return db.promise().query('INSERT INTO COINS (uuid, symbol, name, price, marketCap, volume, change) VALUES (?,?,?,?,?,?,?)',[coin.uuid,coin.symbol,coin.name,coin.price,coin.marketCap,coin.volume,coin.change]).then((result, fields) => {
+        console.log("DB: ", result[0]);
+        return result[0];
+    })
+    .catch(err => {
+        console.log(err);
+        throw err;
+    })
+}
+
+exports.setCoin = (coin) => {
+    return db.promise().query('SET COINS price = ?, marketCap = ?, volume = ?, change = ? WHERE id = ?',[coin.price, coin.marketCap, coin.volume, coin.change, coin.id]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -34,8 +45,8 @@ exports.getCoinById = (id) => {
     })
 }
 
-exports.setMarketCap = (marketCap, id) => {
-    return db.promise().query('UPDATE COINS SET marketCap = ? WHERE id = ?',[marketCap,id]).then((result, fields) => {
+exports.deleteCoin = (id) => {
+    return db.promise().query('DELETE  * FROM COINS WHERE id = ? ',[id]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -44,27 +55,3 @@ exports.setMarketCap = (marketCap, id) => {
         throw err;
     })
 }
-
-
-exports.setPriceChange = (change, id) => {
-    return db.promise().query('UPDATE COINS SET priceChange = ? WHERE id = ?',[change,id]).then((result, fields) => {
-        console.log("DB: ", result[0]);
-        return result[0];
-    })
-    .catch(err => {
-        console.log(err);
-        throw err;
-    })
-}
-
-exports.setVolume = (volume, id) => {
-    return db.promise().query('UPDATE COINS SET volumen24 = ? WHERE id = ?',[volume,id]).then((result, fields) => {
-        console.log("DB: ", result[0]);
-        return result[0];
-    })
-    .catch(err => {
-        console.log(err);
-        throw err;
-    })
-}
-

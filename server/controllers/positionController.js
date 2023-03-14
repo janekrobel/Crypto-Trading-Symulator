@@ -5,9 +5,13 @@ exports.getPositionsByUserId = (request, response) => {
 }
 
 exports.createPositions = (request, response) => {
-    model.createPositions(request.body.id_user, request.body.amountid_coin, request.body.price, request.body.amount, request.body.date, request.body.type).then((result)=>{ response.json(result)});
+    model.createPositions(request.body).then((result)=>{ response.json(result)});
 }
 
 exports.closePosition = (request, response) => {
     model.closePosition(request.query.id).then((result)=>{ response.json(result)});
+}
+
+exports.setPosition = (request,response) => {
+    model.setPosition(request.body).then((result)=>{{response.json(result)}});
 }

@@ -12,8 +12,7 @@ exports.bodyverifyToken = (req, res, next) => {
                 res.sendStatus(401);
             }
             else{
-                console.log(body);
-                next();
+                req.email = body.email;
             }
             
         });

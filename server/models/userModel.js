@@ -1,7 +1,7 @@
 const db = require('../config/mysql2/db.js');
 
 exports.getUserById = (id) => {
-    return db.promise().query('SELECT * FROM USERS WHERE id = ?',[id]).then((result, fields) => {
+    return db.promise().query('SELECT * FROM USER WHERE id = ?',[id]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -12,7 +12,7 @@ exports.getUserById = (id) => {
 }
 
 exports.getUserByEmail = (email) => {
-    return db.promise().query('SELECT * FROM USERS WHERE email = ?',[email]).then((result, fields) => {
+    return db.promise().query('SELECT * FROM USER WHERE email = ?',[email]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -24,7 +24,7 @@ exports.getUserByEmail = (email) => {
 
 
 exports.createUser = (email) => {
-    return db.promise().query('INSERT INTO USERS (email,balance) VALUES (?,100.00)',[email]).then((result, fields) => {
+    return db.promise().query('INSERT INTO USER (email,balance) VALUES (?,100.00)',[email]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -34,8 +34,8 @@ exports.createUser = (email) => {
     })
 }
 
-exports.getUserBalance = (id) => {
-    return db.promise().query('SELECT balance FROM USERS WHERE id = ?',[id]).then((result, fields) => {
+exports.setUser = (user) => {
+    return db.promise().query('UPDATE USER SET balance = ? WHERE id = ?',[balance,id]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -45,8 +45,9 @@ exports.getUserBalance = (id) => {
     })
 }
 
-exports.setUserBalance = (id, balance) => {
-    return db.promise().query('UPDATE USERS SET balance = ? WHERE id = ?',[balance,id]).then((result, fields) => {
+
+exports.deleteUser = (id) => {
+    return db.promise().query('DELETE * FROM USER WHERE id = ? ',[id]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
