@@ -3,6 +3,8 @@ const coinController = require('./controllers/coinController');
 
 const axios = require("axios");
 
+let coins = [];
+
 const options = {
   method: 'GET',
   url: 'https://coinranking1.p.rapidapi.com/coins',
@@ -22,24 +24,29 @@ const options = {
 };
 
 axios.request(options).then(function (response) {
-	coins = response.coins;
-}).catch(function (error) {
-	console.error(error);
-});
-
-
-coins.forEach((_coin)=>{
+	coins = response.data.data.coins;
+  console.log(coins);
+  coins.forEach((_coin)=>{
     let coin = {
         "uuid" : _coin.uuid,
         "symbol" : _coin.symbol,
         "name" : _coin.name,
         "price" : _coin.price,
-        "price" : _coin.marketCap,
+        "marketCap" : _coin.marketCap,
+        "iconUrl" : _coin.iconUrl,
         "volume" : _coin["24hVolume"],
         "change" : _coin.change,
     }
 
+    console.log(coin);
+
     coinController.createCoin(coin);
 });
+}).catch(function (error) {
+	console.error(error);
+});
+
+
+
 
 //test out;

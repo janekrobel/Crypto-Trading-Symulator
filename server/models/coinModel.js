@@ -2,7 +2,7 @@ const db = require('../config/mysql2/db.js');
 
 
 exports.getAllCoins = () => {
-    return db.promise().query('SELECT * FROM COINS ORDER BY marketCap').then((result, fields) => {
+    return db.promise().query('SELECT * FROM COIN ORDER BY marketCap').then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -13,7 +13,7 @@ exports.getAllCoins = () => {
 }
 
 exports.createCoin = (coin) => {
-    return db.promise().query('INSERT INTO COINS (uuid, symbol, name, price, marketCap, volume, change) VALUES (?,?,?,?,?,?,?)',[coin.uuid,coin.symbol,coin.name,coin.price,coin.marketCap,coin.volume,coin.change]).then((result, fields) => {
+    return db.promise().query('INSERT INTO COIN (uuid, symbol, name, price, marketCap, iconUrl, priceChange, volumen24) VALUES (?,?,?,?,?,?,?,?)',[coin.uuid,coin.symbol,coin.name,coin.price,coin.marketCap,coin.iconUrl,coin.volume,coin.change]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -24,7 +24,7 @@ exports.createCoin = (coin) => {
 }
 
 exports.setCoin = (coin) => {
-    return db.promise().query('SET COINS price = ?, marketCap = ?, volume = ?, change = ? WHERE id = ?',[coin.price, coin.marketCap, coin.volume, coin.change, coin.id]).then((result, fields) => {
+    return db.promise().query('SET COIN price = ?, marketCap = ?, volume = ?, change = ? WHERE id = ?',[coin.price, coin.marketCap, coin.volume, coin.change, coin.id]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -35,7 +35,7 @@ exports.setCoin = (coin) => {
 }
 
 exports.getCoinById = (id) => {
-    return db.promise().query('SELECT * FROM COINS WHERE id = ?',[id]).then((result, fields) => {
+    return db.promise().query('SELECT * FROM COIN WHERE id = ?',[id]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })

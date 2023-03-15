@@ -18,6 +18,6 @@ exports.setUserBalance = (request,response) => {
 }
 
 exports.deleteUser = (request,response) => {
-    model.deleteUser(request.query.id).then((result)=> {response.json(result);});
+    model.deleteUser(request.query.id).then((result)=> {response.json(result)});
 };
 

@@ -2,7 +2,7 @@ const model = require("../models/coinModel.js");
 
 
 exports.createCoin = (coin) => {
-    model.createCoin(coin).then((result)=>{ response.json(result)});
+    model.createCoin(coin).then((result)=>{});
 }
 
 exports.getAllCoins = (request, response) => {
