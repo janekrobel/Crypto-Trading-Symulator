@@ -42,7 +42,7 @@ const updateCoins = () => {
   
       console.log(coin);
   
-      coinController.createCoin(coin);
+      coinController.setCoin(coin);
   });
   }).catch(function (error) {
     console.error(error);

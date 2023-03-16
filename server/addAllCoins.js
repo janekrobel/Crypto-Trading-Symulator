@@ -34,7 +34,7 @@ axios.request(options).then(function (response) {
         "change" : _coin.change,
     }
 
-    coinController.setCoin(coin);
+    coinController.createCoin(_coin);
 });
 }).catch(function (error) {
 	console.error(error);

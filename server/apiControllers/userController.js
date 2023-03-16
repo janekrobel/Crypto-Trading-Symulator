@@ -12,7 +12,7 @@ exports.createUser = (request,response) => {
     model.createUser(request.body.email).then((result)=>{ response.json(result)});
 }
 
-exports.setUser= (request,response) => { 
+exports.setUser = (request,response) => { 
     model.setUser(request.body).then((result)=>{ response.json(result)});
 }
 
