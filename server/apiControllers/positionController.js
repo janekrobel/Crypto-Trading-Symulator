@@ -1,4 +1,4 @@
-const model = require("../models/positionModel.js");
+const model = require("../models/positionsModel.js");
 
 exports.getPositionsByUserId = (request, response) => {
     model.getPositionsByUserId(request.query.userId).then((result)=>{ response.json(result)});

@@ -1,12 +1,14 @@
-const middleware = require("../middleware/middleware.js");
+//const middleware = require("../middleware/middleware.js");
 const express = require("express");
 const router = express.Router();
-const controller = require("../controllers/postController.js");
+const controller = require("../apiControllers/coinController.js");
 
-router.get("/coins", controller.getAllCoins());
+router.get("/coins", controller.getAllCoins);
 
-router.put("/", controller.setCoin());
+router.put("/", controller.setCoin);
 
-router.get("/", controller.getCoinById()); 
+router.get("/", controller.getCoinById); 
 
-router.delete("/", controller.deleteCoin()); 
+router.delete("/", controller.deleteCoin); 
+
+module.exports = router;

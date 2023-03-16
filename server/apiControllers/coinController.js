@@ -9,8 +9,8 @@ exports.getAllCoins = (request, response) => {
     model.getAllCoins().then((result)=>{ response.json(result)});
 }
 
-exports.setCoin = (request, response) => {
-    model.setPrice(request.body).then((result)=>{ response.json(result)});
+exports.setCoin = (coin) => {
+    model.setCoin(coin).then((result)=>{ response.json(result)});
 }
 
 exports.getCoinById = (request, response) => {

@@ -6,10 +6,12 @@ const dotenv = require('dotenv');
 const sgMail = require('@sendgrid/mail');
 const cookieParser = require('cookie-parser');
 const userRouting = require('./routings/userRouting.js');
-const positionRouting = require('./routings/coinRouting.js');
-const coinRouting = require('./routings/positionRouting.js');
+const positionRouting = require('./routings/positionRouting.js');
+const coinRouting = require('./routings/coinRouting.js');
 
-const middleware = require('./middleware/middleware.js');
+//const middleware = require('./middleware/middleware.js');
+
+app.set('view engine', 'ejs');
 
 dotenv.config();
 
@@ -17,17 +19,27 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("coins", coinRouting);
-app.use("users", userRouting);
-app.use("positions", positionRouting);
+app.use("/coins", coinRouting);
+app.use("/users", userRouting);
+app.use("/positions", positionRouting);
+
+app.get('/', function(req, res) {
+    res.render('link2');
+  });
+  
+  // about page
+app.get('/about', function(req, res) {
+    res.render('link1');
+});
 
 app.use(cors({
     origin: '*'
 }));
 
+/*
+
 app.post('/login', async (req,res) => {
     const email = req.body.email;
-    // check if in db 
     const token = jwt.sign({ email }, process.env.SECRETKEY);
     const loginLink = `https://localhost:3001/login?key=${token}`;
     sendLoginEmail(email, loginLink).then(() => {
@@ -72,6 +84,7 @@ app.post('/getToken', (req,res) => {
 
 app.get('/getUser', middleware.verifyToken , (req,res) => {
 });
+*/
 
 
 

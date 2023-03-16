@@ -35,7 +35,7 @@ exports.createUser = (email) => {
 }
 
 exports.setUser = (user) => {
-    return db.promise().query('UPDATE USER SET balance = ? WHERE id = ?',[balance,id]).then((result, fields) => {
+    return db.promise().query('UPDATE USER SET balance = ? WHERE id = ?',[user.balance,user.id]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })

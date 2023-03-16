@@ -13,7 +13,8 @@ exports.getPositionsByUserId = (userId) => {
 
 exports.createPositions = (position) =>{
     return db.promise().query(
-        `INSERT INTO POSITION (id_user, id_coin, price, amounts, date, type) VALUES (?,?,?,?,?,?)`,[position.id_user, position.id_coin, position.price, position.amount, position.date, position.type]).then((result, fields) => {
+        `INSERT INTO POSITION (id_user, id_coin, price, amounts, date, type) VALUES (?,?,?,?,?,?)`,[position.id_user, position.id_coin, position.price, position.amounts, position.date, position.type]).then((result, fields) => {
+            //datetime format
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -23,8 +24,8 @@ exports.createPositions = (position) =>{
     })
 }
 
-exports.setPosition = (coin) => {
-    return db.promise().query('SET POSITION price = ?, amounts = ?, date = ?, type = ?, id_user = ?, id_coin = ? WHERE id = ?',[position.price , position.amounts, position.date, position.type, position.id_user, position.id_coin, position.id]).then((result, fields) => {
+exports.setPosition = (position) => {
+    return db.promise().query('UPDATE POSITION SET price = ?, amounts = ?, date = ?, type = ?, id_user = ?, id_coin = ? WHERE id = ?',[position.price , position.amounts, position.date, position.type, position.id_user, position.id_coin, position.id]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })

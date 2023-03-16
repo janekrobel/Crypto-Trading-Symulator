@@ -2,7 +2,7 @@ const db = require('../config/mysql2/db.js');
 
 
 exports.getAllCoins = () => {
-    return db.promise().query('SELECT * FROM COIN ORDER BY marketCap').then((result, fields) => {
+    return db.promise().query('SELECT * FROM COIN ORDER BY marketCap DESC').then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -24,7 +24,7 @@ exports.createCoin = (coin) => {
 }
 
 exports.setCoin = (coin) => {
-    return db.promise().query('SET COIN price = ?, marketCap = ?, volume = ?, change = ? WHERE id = ?',[coin.price, coin.marketCap, coin.volume, coin.change, coin.id]).then((result, fields) => {
+    return db.promise().query('UPDATE COIN SET price = ?, marketCap = ?, volumen24 = ?, priceChange = ? WHERE uuid = ?',[coin.price, coin.marketCap, coin.volume, coin.change, coin.uuid]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -46,7 +46,7 @@ exports.getCoinById = (id) => {
 }
 
 exports.deleteCoin = (id) => {
-    return db.promise().query('DELETE  * FROM COINS WHERE id = ? ',[id]).then((result, fields) => {
+    return db.promise().query('DELETE FROM COIN WHERE id = ? ',[id]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })

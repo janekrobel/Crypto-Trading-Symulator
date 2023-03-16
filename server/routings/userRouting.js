@@ -1,14 +1,16 @@
-const middleware = require("../middleware/middleware.js");
+//const middleware = require("../middleware/middleware.js");
 const express = require("express");
 const router = express.Router();
-const controller = require("../controllers/userController.js");
+const controller = require("../apiControllers/userController.js");
 
-router.get("/", controller.getUserById());
+router.get("/", controller.getUserById);
 
-router.get("/byEmail/", controller.getUserByEmail());
+router.get("/byEmail/", controller.getUserByEmail);
 
-router.post("/", controller.createUser());
+router.post("/", controller.createUser);
 
-router.put("/",middleware, controller.setUser());
+router.put("/", controller.setUser);
 
-router.delete("/", middleware, controller.deleteUser());
+router.delete("/", controller.deleteUser);
+
+module.exports = router;
