@@ -30,16 +30,12 @@ const updateCoins = () => {
     console.log(coins);
     coins.forEach((_coin)=>{
       let coin = {
-          "uuid" : _coin.uuid,
-          "symbol" : _coin.symbol,
-          "name" : _coin.name,
-          "price" : _coin.price,
-          "marketCap" : _coin.marketCap,
-          "iconUrl" : _coin.iconUrl,
-          "volume" : _coin["24hVolume"],
-          "change" : _coin.change,
-      }
-  
+        "uuid" : _coin.uuid,
+        "price" : _coin.price,
+        "marketCap" : _coin.marketCap,
+        "volume" : _coin["24hVolume"],
+        "change" : _coin.change,
+    }  
       console.log(coin);
   
       coinController.setCoin(coin);
