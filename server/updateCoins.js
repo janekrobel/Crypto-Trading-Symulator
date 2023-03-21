@@ -3,6 +3,7 @@ const coinController = require('./apiControllers/coinController');
 const axios = require("axios");
 
 let coins = [];
+let allCoins = [];
 
 const options = {
   method: 'GET',
@@ -25,6 +26,7 @@ const options = {
 setInterval(updateCoins,300000);
 
 const updateCoins = () => {
+  allCoins = coinController.getAllCoins();
   axios.request(options).then(function (response) {
     coins = response.data.data.coins;
     console.log(coins);
@@ -36,9 +38,8 @@ const updateCoins = () => {
         "volume" : _coin["24hVolume"],
         "change" : _coin.change,
     }  
-      console.log(coin);
-  
       coinController.setCoin(coin);
+      //remove from the list
   });
   }).catch(function (error) {
     console.error(error);
