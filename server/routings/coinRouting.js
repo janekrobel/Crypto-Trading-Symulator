@@ -7,7 +7,7 @@ router.get("/coins", controller.getAllCoins);
 
 router.put("/", controller.setCoin);
 
-router.get("/", controller.getCoinById); 
+router.get("/", controller.getCoinById);
 
 router.delete("/", controller.deleteCoin); 
 

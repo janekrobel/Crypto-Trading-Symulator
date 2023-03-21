@@ -8,10 +8,12 @@ const cookieParser = require('cookie-parser');
 const userRouting = require('./routings/userRouting.js');
 const positionRouting = require('./routings/positionRouting.js');
 const coinRouting = require('./routings/coinRouting.js');
-
+const coinController = require('./apiControllers/coinController');
 //const middleware = require('./middleware/middleware.js');
 
 app.set('view engine', 'ejs');
+
+app.use();
 
 dotenv.config();
 
@@ -24,31 +26,32 @@ app.use("/users", userRouting);
 app.use("/positions", positionRouting);
 
 app.get('/', function(req, res) {
-    res.render('link2');
+    //add css
+    //_account
+    let _account ="";
+    let _coins = coinController.getAllCoins;
+    res.render('main', {
+        coins:_coins,
+        account:_account,
+     } );
   });
   
-  // about page
-app.get('/about', function(req, res) {
-    res.render('link1');
+
+app.get('/login', function(req, res) {
+    res.render('login');
 });
 
-app.use(cors({
-    origin: '*'
-}));
-
-/*
-
-app.post('/login', async (req,res) => {
+app.post('/login', function(req, res) {
     const email = req.body.email;
     const token = jwt.sign({ email }, process.env.SECRETKEY);
-    const loginLink = `https://localhost:3001/login?key=${token}`;
+    const loginLink = `https://localhost:3001/loginlink?key=${token}`;
     sendLoginEmail(email, loginLink).then(() => {
         res.send(true);
     });
 });
 
-app.get('/login', async (req, res) => {
-    const { key } = req.query;
+app.get('/loginlink', async (req, res) => {
+    const key = req.query.key;
     try {
         const { email } = jwt.verify(key,process.env.SECRETKEY);
         console.log("cookies");
@@ -59,32 +62,13 @@ app.get('/login', async (req, res) => {
     }
 });
 
+app.use(cors({
+    origin: '*'
+}));
 
 const sendLoginEmail = async(_to, link) =>{
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    const msg = {
-        to: _to,
-        from: 'theblockchainpizza@gmail.com',
-        subject: 'Log in link',
-        text: 'Thank you for your attention,',
-        html: `<a href="${link}">click here to log in</a>`,
-      };
-    sgMail.send(msg).then(() => {
-        console.log('Email sent successfully');
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+    //add node mailer
 }
-
-app.post('/getToken', (req,res) => {
-    const email = req.body.email;
-    res.json(jwt.sign({ email }, process.env.SECRETKEY));
-});
-
-app.get('/getUser', middleware.verifyToken , (req,res) => {
-});
-*/
 
 
 
