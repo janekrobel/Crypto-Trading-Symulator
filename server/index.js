@@ -13,8 +13,6 @@ const coinController = require('./apiControllers/coinController');
 
 app.set('view engine', 'ejs');
 
-app.use();
-
 dotenv.config();
 
 app.use(express.urlencoded({extended: true}));
@@ -28,8 +26,27 @@ app.use("/positions", positionRouting);
 app.get('/', function(req, res) {
     //add css
     //_account
-    let _account ="";
-    let _coins = coinController.getAllCoins;
+    let _account ={};
+    //let _coins = coinController.getAllCoins();
+    let _coins = "";
+    _coins = [
+        {
+            "symbol": "ETH",
+            "name": "ETHEREUM",
+            "price": 1222.22,
+            "volume": 34322.11,
+            "change":33.22,
+            "marketCap":2344
+        },
+        {
+            "symbol": "BTC",
+            "name": "BITCOIN",
+            "price": 234000.22,
+            "volume": 94922.11,
+            "change":45.23,
+            "marketCap":8222
+        }
+    ]
     res.render('main', {
         coins:_coins,
         account:_account,
