@@ -8,7 +8,9 @@ const cookieParser = require('cookie-parser');
 const userRouting = require('./routings/userRouting.js');
 const positionRouting = require('./routings/positionRouting.js');
 const coinRouting = require('./routings/coinRouting.js');
+const loginRouting = require('./routings/loginRouting.js');
 const coinController = require('./apiControllers/coinController');
+const nodemailer = require('nodemailer');
 //const middleware = require('./middleware/middleware.js');
 
 app.set('view engine', 'ejs');
@@ -22,8 +24,9 @@ app.use(cookieParser());
 app.use("/coins", coinRouting);
 app.use("/users", userRouting);
 app.use("/positions", positionRouting);
+app.use("/login", loginRouting);
 
-app.get('/', function(req, res) {
+app.get('/', (req,res) => {
     //add css
     //_account
     let _account ={};
@@ -47,47 +50,16 @@ app.get('/', function(req, res) {
             "marketCap":8222
         }
     ]
-    res.render('main', {
+    res.render('index', {
         coins:_coins,
         account:_account,
      } );
   });
   
 
-app.get('/login', function(req, res) {
-    res.render('login');
-});
-
-app.post('/login', function(req, res) {
-    const email = req.body.email;
-    const token = jwt.sign({ email }, process.env.SECRETKEY);
-    const loginLink = `https://localhost:3001/loginlink?key=${token}`;
-    sendLoginEmail(email, loginLink).then(() => {
-        res.send(true);
-    });
-});
-
-app.get('/loginlink', async (req, res) => {
-    const key = req.query.key;
-    try {
-        const { email } = jwt.verify(key,process.env.SECRETKEY);
-        console.log("cookies");
-        res.cookie('verification', key, { maxAge: 7200000 }).send('cookie set');
-    }
-    catch(err){
-        res.send("Invalid login link");
-    }
-});
-
 app.use(cors({
     origin: '*'
 }));
-
-const sendLoginEmail = async(_to, link) =>{
-    //add node mailer
-}
-
-
 
 
 app.listen(3001); 
