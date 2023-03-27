@@ -3,7 +3,7 @@ const app = express();
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const sgMail = require('@sendgrid/mail');
+
 const cookieParser = require('cookie-parser');
 const userRouting = require('./routings/userRouting.js');
 const positionRouting = require('./routings/positionRouting.js');
@@ -53,7 +53,7 @@ app.get('/', (req,res) => {
     res.render('index', {
         coins:_coins,
         account:_account,
-     } );
+     });
   });
   
 

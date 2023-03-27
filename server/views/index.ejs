@@ -8,8 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-
-    <!-- <header>
+    <header>
         <img src="">
         <p id="balance">Balance: <%=account.balance=%></p>
         <p id="email"><%=account.email=%></p>
@@ -37,7 +36,7 @@
             <p>Current Price</p>
             <p>Profit/Loss</p>
         </div>
-        <%account.positions.foreach((position) => {%>
+        <%=account.positions.foreach((position) => {=%>
             <div class="position">
                 <img src=""/>
                 <p class="symbol"><%=position.symbol=%>/p>
@@ -47,7 +46,7 @@
                 <p class="profitandloss"><%=position.profitandloss=%></p>
                 <button>Close</button>
             </div>
-        <%})%> 
+        <%=})=%>
     </div>
     <div class="currenciesPanel">
         <p class="title">All Currencies:</p>
@@ -58,8 +57,8 @@
             <p>Volume</p>
             <p>Market Cap</p>
             <p>Change</p>
-        </div>         
-        <%coins.foreach((coin) => {%>
+        </div>
+        <%=coins.foreach((coin) => {=%>
             <div class="position">
                 <img src=""/>
                 <p class="symbol"><%=coin.symbol=%></p>
@@ -70,8 +69,5 @@
                 <p class="change"><%=coin.change=%></p>
                 <button>Buy/Sell</button>
             </div>
-        <%})%> 
-    </div> -->
-
-</body>
-</html>
+        <%=});=%>
+    </div>
