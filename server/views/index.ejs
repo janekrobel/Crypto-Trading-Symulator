@@ -10,8 +10,8 @@
 <body>
     <header>
         <img src="">
-        <p id="balance">Balance: <%=account.balance=%></p>
-        <p id="email"><%=account.email=%></p>
+        <p id="balance">Balance: <%=account.balance%></p>
+        <p id="email"><%=account.email%></p>
         <button>Log Out</button>
     </header>
     <div class="tradePanel">
@@ -50,13 +50,91 @@
         <%for(coin of coins){%>
             <div class="position">
                 <img src=""/>
-                <p class="symbol"><%=coin.symbol=%></p>
-                <p class="name"><%=coin.name=%></p>
-                <p class="price"><%=coin.price=%></p>
-                <p class="volume"><%=coin.volume=%></p>
-                <p class="marketcap"><%=coin.marketCap=%></p>
-                <p class="change"><%=coin.change=%></p>
+                <p class="symbol"><%=coin.symbol%></p>
+                <p class="name"><%=coin.name%></p>
+                <p class="price"><%=coin.price%></p>
+                <p class="volume"><%=coin.volume%></p>
+                <p class="marketcap"><%=coin.marketCap%></p>
+                <p class="change"><%=coin.change%></p>
                 <button>Buy/Sell</button>
             </div>
         <%}%>
     </div>
+
+    <table>
+        <thead>
+          <tr>
+            <th>Coin</th>
+            <th>Symbol</th>
+            <th>Price</th>
+            <th>24h %</th>
+            <th>Market Cap</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bitcoin</td>
+            <td>BTC</td>
+            <td>$48,702.35</td>
+            <td>+0.49%</td>
+            <td>$910,673,764,615</td>
+          </tr>
+          <tr>
+            <td>Ethereum</td>
+            <td>ETH</td>
+            <td>$1,515.57</td>
+            <td>+2.67%</td>
+            <td>$173,594,801,478</td>
+          </tr>
+          <tr>
+            <td>Binance Coin</td>
+            <td>BNB</td>
+            <td>$233.45</td>
+            <td>-0.34%</td>
+            <td>$36,039,642,822</td>
+          </tr>
+        </tbody>
+      </table>
+</body>
+
+<style>
+    table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+  color: #444;
+  font-weight: bold;
+  border-bottom: 2px solid #ccc;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+td:first-child {
+  font-weight: bold;
+}
+
+td:nth-child(3), td:nth-child(4) {
+  font-family: monospace;
+}
+
+td:last-child {
+  text-align: right;
+}
+
+</style>
+</html>
+

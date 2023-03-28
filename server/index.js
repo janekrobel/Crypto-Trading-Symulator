@@ -29,7 +29,10 @@ app.use("/login", loginRouting);
 app.get('/', (req,res) => {
     //add css
     //_account
-    let _account ={};
+    let _account ={
+        balance: 2000, 
+        email: 'xxx@gmail.com'
+    };
     //let _coins = coinController.getAllCoins();
     let _coins = "";
     _coins = [
@@ -57,9 +60,6 @@ app.get('/', (req,res) => {
   });
   
 
-app.use(cors({
-    origin: '*'
-}));
 
 
 app.listen(3001); 

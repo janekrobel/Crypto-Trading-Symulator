@@ -1,6 +1,6 @@
 const nodeMailer = require("nodemailer");
 
-const sendLoginEmail = async(_to, link) =>{
+const sendLoginEmail = (_to, link) =>{
     const transporter = nodeMailer.createTransport({
         host: 'smtp.swissmail.org',
         port: 587,
@@ -27,4 +27,5 @@ const sendLoginEmail = async(_to, link) =>{
     });
 }
 
-sendLoginEmail("robelkowo@gmail.com", "wp.pl");
+
+// sendLoginEmail("stachu1012@gmail.com" , "działam");
