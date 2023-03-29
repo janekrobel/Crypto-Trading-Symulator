@@ -1,18 +1,18 @@
 const nodeMailer = require("nodemailer");
 
-const sendLoginEmail = async(_to, link) =>{
+exports.sendLoginEmail = async(_to, link) =>{
     const transporter = nodeMailer.createTransport({
-        host: 'smtp.swissmail.org',
-        port: 587,
+        service: 'gmail',
+        host: 'smtp.gmail.com',
         secure: false,
         auth: {
-          user: 'cryptotradingsymulator@email.ch',
-          pass: 'Robelkowo2017' //add to .env
+          user: 'cryptotradingsymulator@gmail.com',
+          pass: 'fxmxnjmbfuosybba' //add to .env
         }
       });
       
     const mailOptions = {
-        from: 'cryptotradingsymulator@email.ch',
+        from: 'cryptotradingsymulator@gmail.com',
         to: _to,
         subject: 'Complete your login!',
         text: link
@@ -26,5 +26,3 @@ const sendLoginEmail = async(_to, link) =>{
         }
     });
 }
-
-sendLoginEmail("robelkowo@gmail.com", "wp.pl");

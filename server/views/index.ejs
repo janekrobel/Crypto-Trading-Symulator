@@ -5,13 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/index.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
     <header>
         <img src="">
-        <p id="balance">Balance: <%=account.balance=%></p>
-        <p id="email"><%=account.email=%></p>
         <button>Log Out</button>
     </header>
     <div class="tradePanel">
@@ -39,24 +38,86 @@
     </div>
     <div class="currenciesPanel">
         <p class="title">All Currencies:</p>
-        <div class="columnNames">
-            <p>Symbol</p>
-            <p>Name</p>
-            <p>Price</p>
-            <p>Volume</p>
-            <p>Market Cap</p>
-            <p>Change</p>
-        </div>
-        <%for(coin of coins){%>
-            <div class="position">
-                <img src=""/>
-                <p class="symbol"><%=coin.symbol=%></p>
-                <p class="name"><%=coin.name=%></p>
-                <p class="price"><%=coin.price=%></p>
-                <p class="volume"><%=coin.volume=%></p>
-                <p class="marketcap"><%=coin.marketCap=%></p>
-                <p class="change"><%=coin.change=%></p>
-                <button>Buy/Sell</button>
-            </div>
-        <%}%>
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Volume</th>
+                    <th>Market Cap</th>
+                    <th>Change</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <%for(coin of coins){%>
+                    <tr>
+                        <td><%=coin.symbol%></td>
+                        <td><%=coin.name%></td>
+                        <td><%=coin.price%></td>
+                        <td><%=coin.volume%></td>
+                        <td><%=coin.marketCap%></td>
+                        <td><%=coin.change%></td>
+                        <td><button>Buy/Sell</button></td>
+                    </tr>
+                <%}%>
+            </tbody>
+        </table>
     </div>
+    <style>
+
+        body {
+            font-family: 'Roboto';
+        }
+        table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 20px 0;
+        }
+
+        th,
+        td {
+        text-align: left;
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        }
+
+        th {
+        background-color: #e6e6e6;
+        color: #333;
+        }
+
+        tbody tr:hover {
+        background-color: #f5f5f5;
+        }
+        button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition: 1s;
+        }
+
+        button:hover{
+            transform: matrix3d(0.583333, 0.186887, 0.79044, 0, -0.52022, 0.833333, 0.186887, 0, -0.623773, -0.52022, 0.583333, 0, 0, 0, 0, 1);
+        }
+
+        button:hover {
+        opacity: 0.8;
+        }
+
+        .title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        }
+    </style>
+</body>
+</html>
