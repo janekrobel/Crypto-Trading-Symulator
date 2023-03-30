@@ -8,9 +8,10 @@ const userRouting = require('./routings/userRouting.js');
 const positionRouting = require('./routings/positionRouting.js');
 const coinRouting = require('./routings/coinRouting.js');
 const loginRouting = require('./routings/loginRouting.js');
-const coinController = require('./apiControllers/coinController');
+const positionModel = require('./models/positionsModel.js');
+const coinModel = require('./models/coinModel.js');
 const nodemailer = require('nodemailer');
-//const middleware = require('./middleware/middleware.js');
+const middleware = require('./middleware/middleware.js');
 
 app.set('view engine', 'ejs');
 
@@ -25,34 +26,21 @@ app.use("/users", userRouting);
 app.use("/positions", positionRouting);
 app.use("/login", loginRouting);
 
-app.get('/', (req,res) => {
-    //add css
-    //_account
+app.get('/', middleware.bodyverifyToken, (req,res) => {
+    let _postitions = positionModel.getPositionsByUserEmail(req.email);
+    console.log(_postitions);
     let _account ={};
-    //let _coins = coinController.getAllCoins();
-    let _coins = "";
-    _coins = [
-        {
-            "symbol": "ETH",
-            "name": "ETHEREUM",
-            "price": 1222.22,
-            "volume": 34322.11,
-            "change":33.22,
-            "marketCap":2344
-        },
-        {
-            "symbol": "BTC",
-            "name": "BITCOIN",
-            "price": 234000.22,
-            "volume": 94922.11,
-            "change":45.23,
-            "marketCap":8222
-        }
-    ]
-    res.render('index', {
-        coins:_coins,
-        account:_account,
-     });
+    let _coins = coinModel.getAllCoins();
+    Promise.all([_postitions,_coins]).then((results)=>{
+        res.render('index', {
+            coins:results[1],
+            positions:results[0]
+         });
+    }).catch((err)=>{
+        res.sendStatus(404);
+    })
+    
+    
   });
   
 

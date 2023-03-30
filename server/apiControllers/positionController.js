@@ -1,7 +1,8 @@
 const model = require("../models/positionsModel.js");
+const userModel = require("../models/userModel.js");
 
-exports.getPositionsByUserId = (request, response) => {
-    model.getPositionsByUserId(request.query.userId).then((result)=>{ response.json(result)});
+exports.getPositionsByUserEmail = (request, response) => {
+    model.getPositionsByUserEmail(request.email).then((result)=>{ response.json(result)});
 }
 
 exports.createPositions = (request, response) => {

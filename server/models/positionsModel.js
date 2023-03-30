@@ -1,7 +1,7 @@
 const db = require('../config/mysql2/db.js');
 
-exports.getPositionsByUserId = (userId) => {
-    return db.promise().query('SELECT * FROM POSITION WHERE id_user = ?',[userId]).then((result, fields) => {
+exports.getPositionsByUserEmail = (userEmail) => {
+    return db.promise().query('SELECT * FROM `POSITION` WHERE id_user = (SELECT id FROM USER WHERE email = ?);',[userEmail]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })

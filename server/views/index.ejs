@@ -25,16 +25,33 @@
             <button>Sell</button>
         </div>
     </div>
-    <div class="positionPanel">
+    <div class="positionsPanel">
         <p class="title">Your Positions: </p>
         <p id="totalValue">Total Value:</p>
-        <div class="columnNames">
-            <p>Symbol</p>
-            <p>Type</p>
-            <p>Price Opened</p>
-            <p>Current Price</p>
-            <p>Profit/Loss</p>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Coin</th>
+                    <th>Price</th>
+                    <th>Amounts</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Close</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%for(position of positions){%>
+                    <tr>
+                        <td><%=position.id_coin%></td>
+                        <td><%=position.price%></td>
+                        <td><%=position.amounts%></td>
+                        <td><%=position.date%></td>
+                        <td><%=position.type%></td>
+                        <td><a href='/positions/close/?id=<%=position.id%>'>Close</a></td>
+                    </tr>
+                <%}%>
+            </tbody>
+        </table>
     </div>
     <div class="currenciesPanel">
         <p class="title">All Currencies:</p>

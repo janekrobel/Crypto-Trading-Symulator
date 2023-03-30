@@ -16,7 +16,8 @@ exports.getLink = (req, res) => {
     try {
         const { email } = jwt.verify(key,process.env.SECRETKEY);
         console.log("cookies");
-        res.cookie('verification', key, { maxAge: 7200000 }).send('cookie set');
+        res.cookie('verification', key, { maxAge: 7200000 });
+        res.redirect("/");
     }
     catch(err){
         res.send("Invalid login link");

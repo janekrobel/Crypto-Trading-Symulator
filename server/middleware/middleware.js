@@ -1,18 +1,17 @@
+const jwt = require('jsonwebtoken');
+
 exports.bodyverifyToken = (req, res, next) => {
     
-    const bearerHeader = req.headers['authorization'];
+    const authCookie = req.cookies.verification;
 
-    if(typeof bearerHeader !== 'undefined'){
-        const bearer = bearerHeader.split('');
-        const bearerToken = bearer[1];
-        console.log(bearerToken);
-
-        jwt.verify(bearerToken, process.env.SECRETKEY, (err,body) => {
+    if(typeof authCookie !== 'undefined'){
+        jwt.verify(authCookie, process.env.SECRETKEY, (err,body) => {
             if(err){
                 res.sendStatus(401);
             }
             else{
                 req.email = body.email;
+                next();
             }
             
         });
