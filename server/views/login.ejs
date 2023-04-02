@@ -4,13 +4,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <title>Login</title>
     <link rel="stylesheet" href="../styles/index.css"></link>
 </head>
 <body>
-    <form method="post" id="#login" class="loginForm" action="/login">
-        <input name="email" id="email"></input>
-        <input type="submit">Log In</input>
+    <h1>Log in</h1>
+    <form method="post" id="login" class="loginForm" action="/login">
+        <input name="email" id="email" placeholder="Eg. satoshi.nakamoto@gmail.com"></input>
+        <input type="submit" id="submit"></input>
     </form>
+    <style>
+        #email{
+            width: 400px;
+            height: 40px;   
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+            font-family: 'Roboto';
+            padding-left: 10px;
+            font-size: 20px;
+            font-weight: 200;
+            border: none;
+        }
+        #submit{
+            width: 100px;
+            height: 40px;
+            font-size: larger;
+            border: none;
+            background: #F7A600;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 5px;
+        }
+        body{
+            display: flex;
+            flex-direction: column;
+            padding-top: 200px;
+            align-items: center;
+            font-family: 'Roboto';
+        }
+
+    </style>
 </body>
 </html>

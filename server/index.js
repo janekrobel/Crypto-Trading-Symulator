@@ -31,16 +31,14 @@ app.get('/', middleware.bodyverifyToken, (req,res) => {
     console.log(_postitions);
     let _account ={};
     let _coins = coinModel.getAllCoins();
-    Promise.all([_postitions,_coins]).then((results)=>{
-        res.render('index', {
-            coins:results[1],
-            positions:results[0]
-         });
-    }).catch((err)=>{
-        res.sendStatus(404);
-    })
-    
-    
+        Promise.all([_postitions,_coins]).then((results)=>{
+            res.render('index', {
+                coins:results[1],
+                positions:results[0]
+             });
+        }).catch((err)=>{
+            res.sendStatus(404);
+        })    
   });
   
 

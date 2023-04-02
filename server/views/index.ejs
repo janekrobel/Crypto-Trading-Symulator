@@ -11,6 +11,8 @@
 <body>
     <header>
         <img src="">
+        <p id="balance">Balance: </p>
+        <p id="email"></p>
         <button>Log Out</button>
     </header>
     <div class="tradePanel">
@@ -55,32 +57,26 @@
     </div>
     <div class="currenciesPanel">
         <p class="title">All Currencies:</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Symbol</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Volume</th>
-                    <th>Market Cap</th>
-                    <th>Change</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <%for(coin of coins){%>
-                    <tr>
-                        <td><%=coin.symbol%></td>
-                        <td><%=coin.name%></td>
-                        <td><%=coin.price%></td>
-                        <td><%=coin.volume%></td>
-                        <td><%=coin.marketCap%></td>
-                        <td><%=coin.change%></td>
-                        <td><button>Buy/Sell</button></td>
-                    </tr>
-                <%}%>
-            </tbody>
-        </table>
+        <div class="columnNames">
+            <p>Symbol</p>
+            <p>Name</p>
+            <p>Price</p>
+            <p>Volume</p>
+            <p>Market Cap</p>
+            <p>Change</p>
+        </div>
+        <%for(coin of coins){%>
+            <div class="position">
+                <img src=""/>
+                <p class="symbol"><%=coin.symbol%></p>
+                <p class="name"><%=coin.name%></p>
+                <p class="price"><%=coin.price%></p>
+                <p class="volume"><%=coin.volume%></p>
+                <p class="marketcap"><%=coin.marketCap%></p>
+                <p class="change"><%=coin.change%></p>
+                <button>Buy/Sell</button>
+            </div>
+        <%}%>
     </div>
     <style>
 
@@ -138,3 +134,4 @@
     </style>
 </body>
 </html>
+

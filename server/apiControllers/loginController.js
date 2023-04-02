@@ -5,7 +5,7 @@ const emailController = require('./emailController.js');
 exports.postLogin = (req, res) => {
     const email = req.body.email;
     const token = jwt.sign({ email }, process.env.SECRETKEY);
-    const loginLink = `https://localhost:3001/login/link?key=${token}`;
+    const loginLink = `http://localhost:3001/login/link?key=${token}`;
     emailController.sendLoginEmail(email, loginLink).then(() => {
         res.send(true);
     });
