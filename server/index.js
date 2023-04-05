@@ -26,19 +26,21 @@ app.use("/users", userRouting);
 app.use("/positions", positionRouting);
 app.use("/login", loginRouting);
 
-app.get('/', middleware.bodyverifyToken, (req,res) => {
-    let _postitions = positionModel.getPositionsByUserEmail(req.email);
-    console.log(_postitions);
+//app.get('/', middleware.bodyverifyToken, (req,res) => {
+    //let _postitions = positionModel.getPositionsByUserEmail(req.email);
+
+
+app.get('/', async (req,res) => {
+
+    let _positions = await positionModel.getPositionsByUserEmail("robelkowo@gmail.com");
+    //console.log(_postitions);
     let _account ={};
-    let _coins = coinModel.getAllCoins();
-        Promise.all([_postitions,_coins]).then((results)=>{
-            res.render('index', {
-                coins:results[1],
-                positions:results[0]
-             });
-        }).catch((err)=>{
-            res.sendStatus(404);
-        })    
+    let _coins = await coinModel.getAllCoins(); 
+
+   res.render('index',{
+    positions:_positions,
+    coins:_coins
+   })
   });
   
 
