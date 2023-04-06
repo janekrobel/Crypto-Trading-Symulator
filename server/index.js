@@ -34,7 +34,7 @@ app.get('/', async (req,res) => {
 
     let _positions = await positionModel.getPositionsByUserEmail("robelkowo@gmail.com");
     //console.log(_postitions);
-    let _account ={};
+    let _account ={}; //add account
     let _coins = await coinModel.getAllCoins(); 
 
    res.render('index',{

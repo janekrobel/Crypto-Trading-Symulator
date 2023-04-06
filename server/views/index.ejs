@@ -19,15 +19,15 @@
         <p class="title">Open a position:</p>
         <div class="panel">
             <p id="availableBalance">Available Balance:</p>
-            <div class="tradeInput">
+            <form method="post" id="position" class="tradeInput" action="/position">
                 <select name="coin_id" id="coin_id">
                     <% for (coin of coins) { %>
                         <option value="<%= coin.id %>"><%= coin.symbol %></option>
                     <% } %>
                 </select>                
                 <p id="currentPrice">Current Price:</p>
-                <input class="priceInput"></input>
-            </div>
+                <input class="priceInput" name="amounts"></input>
+            </form>
             <button>Buy</button>
             <button>Sell</button>
         </div>
@@ -70,7 +70,7 @@
             <p>Market Cap</p>
             <p>Change</p>
         </div>
-        <table>
+        <table id="coinTable">
             <thead>
               <tr>
                 <th>Symbol</th>
@@ -91,7 +91,7 @@
                   <td><%=coin.volume%></td>
                   <td><%=coin.marketCap%></td>
                   <td><%=coin.change%></td>
-                  <td><button>Buy/Sell</button></td>
+                  <td><button id="btnCoin<%=coin.id%>">Buy/Sell</button></td>
                 </tr>
               <%}%>
             </tbody>
@@ -167,6 +167,20 @@
         margin-bottom: 10px;
         }
     </style>
+    <script>
+        const myTable = document.getElementById('coinTable');  
+        const select = document.getElementById('coin_id');
+
+        let tableCounter = 1;
+
+        for (let row of myTable.rows) {
+            const btn = document.getElementById('btnCoin'+ tableCounter);
+            btn.addEventListener('click', function handleClick(){
+                select.value = row.cells[0];
+            });
+            tableCounter++;
+        }   
+    </script>
 </body>
 </html>
 

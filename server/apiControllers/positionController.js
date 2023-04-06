@@ -6,10 +6,14 @@ exports.getPositionsByUserEmail = (request, response) => {
 }
 
 exports.createPositions = (request, response) => {
+    //subtract from balance
+    //check if balance is enough
     model.createPositions(request.body).then((result)=>{ response.json(result)});
 }
 
 exports.closePosition = (request, response) => {
+    //add to balance
+    //coinPrice * amounts
     model.closePosition(request.query.id).then((result)=>{ response.json(result)});
 }
 
