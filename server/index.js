@@ -38,8 +38,6 @@ app.get('/', async (req,res) => {
     let _coins = await coinModel.getAllCoins(); 
     let _totalValue = await positionModel.getValueOfAllPositionsByEmail("robelkowo@gmail.com");
     let _totalBalance = _totalValue + _account.balance
-
-    console.log(_account);
     
     res.render('index',{
         positions:_positions,
