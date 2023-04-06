@@ -9,6 +9,7 @@ const positionRouting = require('./routings/positionRouting.js');
 const coinRouting = require('./routings/coinRouting.js');
 const loginRouting = require('./routings/loginRouting.js');
 const positionModel = require('./models/positionsModel.js');
+const userModel = require('./models/userModel.js');
 const coinModel = require('./models/coinModel.js');
 const nodemailer = require('nodemailer');
 const middleware = require('./middleware/middleware.js');
@@ -33,14 +34,18 @@ app.use("/login", loginRouting);
 app.get('/', async (req,res) => {
 
     let _positions = await positionModel.getPositionsByUserEmail("robelkowo@gmail.com");
-    //console.log(_postitions);
-    let _account ={}; //add account
+    let _account = await userModel.getUserByEmail("robelkowo@gmail.com");
     let _coins = await coinModel.getAllCoins(); 
+    let _totalValue = await positionModel.getValueOfAllPositionsByEmail("robelkowo@gmail.com");
+    let _totalBalance = _totalValue + _account.balance
 
-   res.render('index',{
-    positions:_positions,
-    coins:_coins
-   })
+    res.render('index',{
+        positions:_positions,
+        coins:_coins,
+        accoun: _account,
+        totalValue:_totalValue,
+        totalBalance: _totalBalance
+    })
   });
   
 

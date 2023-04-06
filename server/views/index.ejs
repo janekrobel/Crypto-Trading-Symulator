@@ -11,30 +11,31 @@
 <body>
     <header>
         <img src="">
-        <p id="balance">Balance: </p>
-        <p id="email"></p>
+        <p id="balance">Balance: <%=totalBalance%></p>
+        <p id="email"><%=account.email%></p>
         <button>Log Out</button>
     </header>
     <div class="tradePanel">
         <p class="title">Open a position:</p>
         <div class="panel">
-            <p id="availableBalance">Available Balance:</p>
+            <p id="availableBalance">Available Balance: <%=account.balance%></p>
             <form method="post" id="position" class="tradeInput" action="/position">
                 <select name="coin_id" id="coin_id">
                     <% for (coin of coins) { %>
                         <option value="<%= coin.id %>"><%= coin.symbol %></option>
                     <% } %>
-                </select>                
+                </select>
+                <p name="email" value="<%=account.email%>"><%=account.email%></p>                
                 <p id="currentPrice">Current Price:</p>
                 <input class="priceInput" name="amounts"></input>
+                <input name="type" value="Long" type="submit">Buy</input>
+                <input name="type" value="Short" type="submit">Sell</input>
             </form>
-            <button>Buy</button>
-            <button>Sell</button>
         </div>
     </div>
     <div class="positionsPanel">
         <p class="title">Your Positions: </p>
-        <p id="totalValue">Total Value:</p>
+        <p id="totalValue">Total Value: <%=totalvalue%></p>
         <table>
             <thead>
                 <tr>
@@ -180,6 +181,9 @@
             });
             tableCounter++;
         }   
+
+        const balance = document.getElementById('balance');  
+
     </script>
 </body>
 </html>

@@ -11,4 +11,6 @@ router.put("/" ,controller.setPosition);
 
 router.get("/", controller.closePosition);
 
+router.get("/value", controller.getValueOfAllPositionsByEmail);
+
 module.exports = router;
