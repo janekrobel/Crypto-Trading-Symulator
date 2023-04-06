@@ -23,7 +23,7 @@ exports.getPositionsById = (_id) => {
 
 exports.getValueOfAllPositionsByEmail = (_email) => {
     //check if correct
-    return db.promise().query('SELECT SUM(amounts*(SELECT price FROM coin WHERE id = coin_id)) FROM `POSITION` WHERE id_user = (SELECT id FROM USER WHERE email = ?);',[_id]).then((result, fields) => {
+    return db.promise().query('SELECT SUM(amounts*(SELECT price FROM COIN WHERE id = id_coin)) FROM `POSITION` WHERE id_user = (SELECT id FROM USER WHERE email = ?);',[_email]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })

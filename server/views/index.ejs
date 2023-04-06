@@ -19,7 +19,7 @@
         <p class="title">Open a position:</p>
         <div class="panel">
             <p id="availableBalance">Available Balance: <%=account.balance%></p>
-            <form method="post" id="position" class="tradeInput" action="/position">
+            <form method="post" id="position" class="tradeInput" action="/positions">
                 <select name="coin_id" id="coin_id">
                     <% for (coin of coins) { %>
                         <option value="<%= coin.id %>"><%= coin.symbol %></option>
@@ -28,14 +28,14 @@
                 <p name="email" value="<%=account.email%>"><%=account.email%></p>                
                 <p id="currentPrice">Current Price:</p>
                 <input class="priceInput" name="amounts"></input>
-                <input name="type" value="Long" type="submit">Buy</input>
-                <input name="type" value="Short" type="submit">Sell</input>
+                <input name="type" value="Long" type="submit"></input>
+                <input name="type" value="Short" type="submit"></input>
             </form>
         </div>
     </div>
     <div class="positionsPanel">
         <p class="title">Your Positions: </p>
-        <p id="totalValue">Total Value: <%=totalvalue%></p>
+        <p id="totalValue">Total Value: <%=totalValue%></p>
         <table>
             <thead>
                 <tr>
@@ -176,10 +176,13 @@
 
         for (let row of myTable.rows) {
             const btn = document.getElementById('btnCoin'+ tableCounter);
+            //add what is inside of row.cells[0]
+            /*
             btn.addEventListener('click', function handleClick(){
                 select.value = row.cells[0];
             });
             tableCounter++;
+            */
         }   
 
         const balance = document.getElementById('balance');  
