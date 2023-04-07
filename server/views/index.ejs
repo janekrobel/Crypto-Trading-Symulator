@@ -25,7 +25,7 @@
                         <option value="<%= coin.id %>"><%= coin.symbol %></option>
                     <% } %>
                 </select>
-                <p name="email" value="<%=account.email%>"><%=account.email%></p>                
+                <input name="email" value="<%=account.email%>" hidden><%=account.email%></p>                
                 <p id="currentPrice">Current Price:</p>
                 <input class="priceInput" name="amounts"></input>
                 <input name="type" value="Long" type="submit"></input>
@@ -92,7 +92,7 @@
                   <td><%=coin.volume%></td>
                   <td><%=coin.marketCap%></td>
                   <td><%=coin.change%></td>
-                  <td><button id="btnCoin<%=coin.id%>">Buy/Sell</button></td>
+                  <td><button onClick="changeCurrent(<%=coin.id%>)" id="btnCoin<%=coin.id%>">Buy/Sell</button></td>
                 </tr>
               <%}%>
             </tbody>
@@ -172,21 +172,25 @@
         const myTable = document.getElementById('coinTable');  
         const select = document.getElementById('coin_id');
 
-        let tableCounter = 1;
+        // let tableCounter = 1;
 
-        for (let row of myTable.rows) {
-            const btn = document.getElementById('btnCoin'+ tableCounter);
-            //add what is inside of row.cells[0]
-            /*
-            btn.addEventListener('click', function handleClick(){
-                select.value = row.cells[0];
-            });
-            tableCounter++;
-            */
-        }   
+        // for (let row of myTable.rows) {
+        //     const btn = document.getElementById('btnCoin'+ tableCounter);
+          
+            
+        //     btn.addEventListener('click', function handleClick(){
+        //         select.value = row.cells[0];
+        //     });
+        //     tableCounter++;
+        
+        // }   
 
-        const balance = document.getElementById('balance');  
+        // const balance = document.getElementById('balance');  
 
+        function changeCurrent(id){
+            console.log("Funkcja = " , id)
+            select.value = id;
+        }
     </script>
 </body>
 </html>

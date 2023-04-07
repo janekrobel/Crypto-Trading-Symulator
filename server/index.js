@@ -36,8 +36,10 @@ app.get('/', async (req,res) => {
     let _positions = await positionModel.getPositionsByUserEmail("robelkowo@gmail.com");
     let _account = await userModel.getUserByEmail("robelkowo@gmail.com");
     let _coins = await coinModel.getAllCoins(); 
-    let _totalValue = await positionModel.getValueOfAllPositionsByEmail("robelkowo@gmail.com");
-    let _totalBalance = _totalValue + _account.balance
+     let _totalValue = 200
+    // await positionModel.getValueOfAllPositionsByEmail("robelkowo@gmail.com");
+    let _totalBalance = 100
+    // _totalValue + _account.balance
     
     res.render('index',{
         positions:_positions,
