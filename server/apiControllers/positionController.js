@@ -2,21 +2,21 @@ const model = require("../models/positionsModel.js");
 const coinModel = require("../models/coinModel.js");
 const userModel = require("../models/userModel.js");
 
-exports.getPositionsByUserEmail = (request, response) => {
-    model.getPositionsByUserEmail(request.email).then((result)=>{ response.json(result)});
+exports.getPositionsByUserEmail = (req, res) => {
+    model.getPositionsByUserEmail(req.email).then((result)=>{ res.json(result)});
 }
 
-exports.getPositionsById = (request, response) => {
-    model.getPositionsById(request.query.id).then((result)=>{ response.json(result)});
+exports.getPositionsById = (req, res) => {
+    model.getPositionsById(req.query.id).then((result)=>{ res.json(result)});
 };
 
-exports.createPositions = (request, response) => {
-    userModel.getUserByEmail(request.body.email).then((result)=> {
-        //check "result.balance" + "coinResult.price"
-        coinModel.getCoinById(request.body.id_coin).then((coinResult) => {
-            if(result.balance - (coinResult.price * request.body.amounts) >= 0){
-                userModel.setUser(result.balance-(coinResult.price * request.body.amounts)).then((userResult)=>{
-                    model.createPositions(request.body).then((result)=>{ response.json(result)});
+exports.createPositions = (req, res) => {
+    userModel.getUserByEmail(req.body.email).then((user)=> {
+        coinModel.getCoinById(req.body.id_coin).then((coin) => {
+            var balance = user.balance-(coin.price * req.body.amounts)
+            if(balance >= 0){
+                userModel.setUser({balance: balance, id: user.id}).then(()=>{
+                    model.createPositions(req.body).then((result)=>{ res.json(result)});
                 });
             };
         });
@@ -24,32 +24,31 @@ exports.createPositions = (request, response) => {
     });
 }
 
-exports.getValueOfAllPositionsByEmail = (request,response) => {
-    model.getValueOfAllPositionsByEmail(request.query.email).then((result)=>{
-        response.json(result);
-    });
-};
-
-exports.closePosition = (request, response) => {
-    model.getPositionsById(request.query.id).then((result)=>{
+exports.closePosition = (req, res) => {
+    model.getPositionsById(req.query.id).then((result)=>{
         //check "result.id_coin" + "coinResult.price" + "result.amounts" + "result.type"
          coinModel.getCoinById(result.id_coin).then((coinResult)=>{
             userModel.getUserByEmail((userResult)=>{
-                if(result.type == "Short"){
-                    userModel.setUser(2 * result.price * result.amounts - coinResult.price * result.amounts + userResult.balance).then((result)=>{
-                        model.closePosition(request.query.id).then((result)=>{ response.json(result)});
-                    })
-                }
-                else{   
-                    userModel.setUser(coinResult.price * result.amounts + userResult.balance).then((result)=>{
-                        model.closePosition(request.query.id).then((result)=>{ response.json(result)});
-                    })
-                }
+                let wspolczynnik = (result.type === "Long") ? -1 : 1
+                let startPos = result.price * result.amounts
+
+                let pozycja = startPos - coinResult.price * result.amounts
+                let profit = pozycja * wspolczynnik;
+
+                userModel.setUser({balance: startPos + profit + userResult.balance, id: userResult.id})
+                model.closePosition(req.query.id).then((result)=>{ res.json(result)});
+              
             });
         })
     });
 }
 
-exports.setPosition = (request,response) => {
-    model.setPosition(request.body).then((result)=>{{response.json(result)}});
+exports.getValueOfAllPositionsByEmail = (req,res) => {
+    model.getValueOfAllPositionsByEmail(req.query.email).then((result)=>{
+        res.json(result);
+    });
+};
+
+exports.setPosition = (req,res) => {
+    model.setPosition(req.body).then((result)=>{{res.json(result)}});
 }
