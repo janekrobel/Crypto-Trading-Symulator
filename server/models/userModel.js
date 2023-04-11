@@ -3,7 +3,7 @@ const db = require('../config/mysql2/db.js');
 exports.getUserById = (id) => {
     return db.promise().query('SELECT * FROM USER WHERE id = ?',[id]).then((result, fields) => {
         console.log("DB: ", result[0]);
-        return result[0];
+        return result[0][0];
     })
     .catch(err => {
         console.log(err);
@@ -14,7 +14,7 @@ exports.getUserById = (id) => {
 exports.getUserByEmail = (email) => {
     return db.promise().query('SELECT * FROM USER WHERE email = ?',[email]).then((result, fields) => {
         console.log("DB: ", result[0]);
-        return result[0];
+        return result[0][0];
     })
     .catch(err => {
         console.log(err);

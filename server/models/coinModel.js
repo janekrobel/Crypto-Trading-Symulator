@@ -37,7 +37,7 @@ exports.setCoin = (coin) => {
 exports.getCoinById = (id) => {
     return db.promise().query('SELECT * FROM COIN WHERE id = ?',[id]).then((result, fields) => {
         console.log("DB: ", result[0]);
-        return result[0];
+        return result[0][0];
     })
     .catch(err => {
         console.log(err);

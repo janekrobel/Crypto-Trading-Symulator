@@ -1,7 +1,7 @@
 const db = require('../config/mysql2/db.js');
 
 exports.getPositionsByUserEmail = (userEmail) => {
-    return db.promise().query('SELECT * FROM `POSITION` WHERE id_user = (SELECT id FROM USER WHERE email = ?);',[userEmail]).then((result, fields) => {
+    return db.promise().query('SELECT * FROM `POSITION` WHERE id_user = (SELECT id FROM USER WHERE email = ?)',[userEmail]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
@@ -11,9 +11,9 @@ exports.getPositionsByUserEmail = (userEmail) => {
     })
 }
 exports.getPositionsById = (_id) => {
-    return db.promise().query('SELECT * FROM `POSITION` WHERE id = ?);',[_id]).then((result, fields) => {
-        console.log("DB: ", result[0]);
-        return result[0];
+    return db.promise().query('SELECT * FROM `POSITION` WHERE id = ?',[_id]).then((result, fields) => {
+        console.log("DB: ", result[0][0]);
+        return result[0][0];
     })
     .catch(err => {
         console.log(err);
@@ -35,8 +35,9 @@ exports.getValueOfAllPositionsByEmail = (_email) => {
 
 
 exports.createPositions = (position) =>{
+    const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
     return db.promise().query(
-        `INSERT INTO POSITION (id_user, id_coin, price, amounts, date, type) VALUES (?,?,?,?,?,?)`,[position.id_user, position.id_coin, position.price, position.amounts, position.date, position.type]).then((result, fields) => {
+        "INSERT INTO POSITION (`id_user`,`id_coin`, `price`, `amounts`, `date`, `type`) VALUES (?,?,?,?,?,?)",[position.id_user , parseInt(position.id_coin), position.price, parseFloat(position.amounts), now, position.type]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })

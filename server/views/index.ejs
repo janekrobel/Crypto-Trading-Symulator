@@ -20,16 +20,16 @@
         <div id="panel" class="panel">
             <p id="availableBalance">Available Balance: <%=account.balance%></p>
             <form method="post" id="position" class="tradeInput" action="/positions">
-                <select name="coin_id" id="coin_id">
+                <select onchange="changeSelect()" name="coin_id" id="coin_id">
                     <% for (coin of coins) { %>
                         <option value="<%= coin.id %>"><%= coin.symbol %></option>
                     <% } %>
                 </select>
-                <input name="email" value="<%=account.email%>" hidden><%=account.email%></p>                
                 <p id="currentPrice">Current Price:</p>
-                <input class="priceInput" name="amounts"></input>
-                <input name="type" value="Long" type="submit"></input>
-                <input name="type" value="Short" type="submit"></input>
+                <p id="valueSpent">value in usd: </p>
+                <input onchange="changeAmounts()" id="priceInput" step="0.000001" placeholder="Eg. 0.033" name="amounts" type="number"></input>
+                <input name="type" value="Long" type="submit" id="long"></input>
+                <input name="type" value="Short" type="submit" id="short"></input>
             </form>
         </div>
     </div>
@@ -55,7 +55,7 @@
                         <td><%=position.amounts%></td>
                         <td><%=position.date%></td>
                         <td><%=position.type%></td>
-                        <td><a href='/positions/close/?id=<%=position.id%>'>Close</a></td>
+                        <td><a href='/positions?id=<%=position.id%>'>Close</a></td>
                     </tr>
                 <%}%>
             </tbody>
@@ -100,11 +100,12 @@
 
         }
         table {
-        border-collapse: collapse;
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-        border-spacing: 0 15px;
+            border-collapse: collapse;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: separate;
+            border-spacing: 0 20px;
         }
 
         th,
@@ -115,12 +116,46 @@
         }
 
         .tradePanel{
+            margin-top: 100px;
+            margin-bottom: 100px;
             width: 80%;
             border: #333;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tradeInput{
+            display: grid;
+            margin-top: 80px;
+            grid-template-columns: 165px 333px 333px ;
+            grid-template-rows: 50px 66px 77px 77px;
+        }
+
+        a{
+            border-radius: 10px;
+            width: 100px;
+            height: 20px;
+            background-color: orange;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 20px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.5s;
+            color: black;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+        a:hover{
+            transform: scale(1.1);
+            opacity: 0.8;
         }
 
         th {
-        background-color: #e6e6e6;
+        border: none;
         color: #333;
         }
 
@@ -133,22 +168,77 @@
 
         }
 
+        #long{
+            grid-row: 4/5;
+            grid-column: 3/4;
+            width: 120px;
+            height: 45px;
+            background: #5DD300;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border: none;
+            border-radius: 5px;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 38px;
+            color: #FFFFFF;
+            text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+            transition: 0.5s;
+        }
+
+        #long:hover{
+            opacity: 0.8; 
+            transform: scale(1.05);
+        }
+
+        #short:hover{
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        #short{
+            grid-row: 4/5;
+            grid-column: 3/4;
+            margin-left: 150px;
+            width: 120px;
+            height: 45px;
+            background:  #FF3D3D;;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border: none;
+            border-radius: 5px;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 38px;
+            color: #FFFFFF;
+            text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+            transition: 0.5s;
+        }
+
         button {
-        border-radius: 10px;
-        background-color: orange;
-        border: none;
-        padding: 8px 16px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 14px;
-        margin: 4px 2px;
-        cursor: pointer;
-        transition: 0.5s;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+            width: 200px;
+            background-color: orange;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 20px;
+            font-size: 20px;
+            height: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.5s;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         }
 
         .panel{
+            display: grid;
+            grid-template-columns: 43px 200px 330px 300px;
+            grid-template-rows: 100px 33px 60px 80px 80px;
             width: 911px;
             height: 364px;
             background: #FFFFFF;
@@ -161,36 +251,106 @@
 
 
         button:hover{
-            transform: scale(1.1)
+            transform: scale(1.1);
+            opacity: 0.8;
         }
 
-        button:hover {
-        opacity: 0.8;
-        }
 
         .title {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 10px;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 36px;
+            text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+            margin-bottom: 30px;
+            margin-left: 100px;
         }
         header{
             display: flex;
             flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
             background-color: #101014;
             margin-top: -10px;
-            width: 100%;
+            width: 100vw;
+            height: 100px;
         }
         #email{
             color: whitesmoke;
+            margin-right: 20px;
         }
         #balance{
             color: whitesmoke;
+            margin-right: 70vw;
+        }
+        #totalValue{
+            margin-left: 145px;
+        }
+
+        #priceInput{
+            grid-row: 2/3;
+            grid-column: 2/5;
+            width: 100%;
+            height: 45px;
+            background: #FFFFFF;
+            border: 1px solid #A6A6A6;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            padding-left: 10px;
+            font-size: 24px;
+            line-height: 29px;
+            color: #7D7D7D;
+
+        }
+        #coin_id{
+            grid-row: 2/3;
+            grid-column: 1/2;
+            margin-left: 10px;
+            width: 120px;
+            height: 45px;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+
+            background: #FFFFFF;
+            border: 1px solid #A6A6A6;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        #valueSpent{
+            grid-row: 1/2;
+            grid-column: 3/4;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 24px;
+
+            color: #000000;
+
+        }
+
+        #currentPrice{
+            grid-row: 1/2;
+            grid-column: 2/3;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 24px;
+
+            color: #000000;
+        }
+        #availableBalance{
+            grid-row: 1/2;
+            grid-column: 4/5;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
         }
 
     </style>
     <script>
         const myTable = document.getElementById('coinTable');  
         const select = document.getElementById('coin_id');
+        const priceInput = document.getElementById('priceInput');
+        const currentPrice = document.getElementById('currentPrice');
+        const valueSpent = document.getElementById('valueSpent');
 
         // let tableCounter = 1;
 
@@ -207,10 +367,20 @@
 
         // const balance = document.getElementById('balance');  
 
+        function changeAmounts(){
+            valueSpent.innerHTML = "value in usd: " +  myTable.rows[select.value].cells[3].innerHTML * priceInput.value;
+        }
+
+        function changeSelect(){
+            currentPrice.innerHTML="Current price: " + myTable.rows[select.value].cells[3].innerHTML;
+        }
+
         function changeCurrent(id){
             console.log("Funkcja = " , id)
             select.value = id;
             window.scrollTo(0, 0)
+            currentPrice.innerHTML="Current price: " + myTable.rows[id].cells[3].innerHTML;
+            
         }
     </script>
 </body>

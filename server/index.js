@@ -35,13 +35,15 @@ app.get('/', async (req,res) => {
     let _account = await userModel.getUserByEmail("robelkowo@gmail.com");
     let _coins = await coinModel.getAllCoins(); 
     let _totalValue = await positionModel.getValueOfAllPositionsByEmail("robelkowo@gmail.com");
-    let _totalBalance = _totalValue + _account.balance
-    
+    let _totalBalance = _totalValue[0]['SUM(amounts*(SELECT price FROM COIN WHERE id = id_coin))'] + _account.balance
+
+    console.log(_totalValue[0]['SUM(amounts*(SELECT price FROM COIN WHERE id = id_coin))'])
+
     res.render('index',{
         positions:_positions,
         coins:_coins,
         account: _account,
-        totalValue:_totalValue,
+        totalValue:_totalValue[0]['SUM(amounts*(SELECT price FROM COIN WHERE id = id_coin))'],
         totalBalance: _totalBalance
     })
   });
