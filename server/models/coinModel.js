@@ -13,7 +13,7 @@ exports.getAllCoins = () => {
 }
 
 exports.createCoin = (coin) => {
-    return db.promise().query('INSERT INTO COIN (uuid, symbol, name, price, marketCap, iconUrl, priceChange, volumen24) VALUES (?,?,?,?,?,?,?,?)',[coin.uuid,coin.symbol,coin.name,coin.price,coin.marketCap,coin.iconUrl,coin.change,coin.volume]).then((result, fields) => {
+    return db.promise().query('INSERT INTO COIN (uuid, symbol, name, price, marketCap, iconUrl, priceChange, volumen24) VALUES (?,?,?,?,?,?,?,?)',[coin.uuid,coin.symbol,coin.name,coin.price,coin.marketCap,coin.iconUrl,coin.priceChange,coin.volumen24]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })

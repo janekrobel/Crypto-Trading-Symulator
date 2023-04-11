@@ -32,10 +32,10 @@ axios.request(options).then(function (response) {
       "price" : _coin.price,
       "marketCap" : _coin.marketCap,
       "iconUrl" : _coin.iconUrl,
-      "volume" : _coin["24hVolume"],
-      "change" : _coin.change,
-  }
-    console.log(coin.volume);
+      "volumen24" : _coin["24hVolume"],
+      "priceChange" : _coin.change,
+    }
+    console.log(coin);
     coinController.createCoin(coin);
 });
 }).catch(function (error) {

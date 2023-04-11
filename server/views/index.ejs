@@ -12,12 +12,12 @@
     <header>
         <img src="">
         <p id="balance">Balance: <%=totalBalance%></p>
-        <p id="email"><%=account.email%></p>
+        <p id="email" class="email"><%=account.email%></p>
         <button>Log Out</button>
     </header>
     <div class="tradePanel">
         <p class="title">Open a position:</p>
-        <div class="panel">
+        <div id="panel" class="panel">
             <p id="availableBalance">Available Balance: <%=account.balance%></p>
             <form method="post" id="position" class="tradeInput" action="/positions">
                 <select name="coin_id" id="coin_id">
@@ -63,21 +63,14 @@
     </div>
     <div class="currenciesPanel">
         <p class="title">All Currencies:</p>
-        <div class="columnNames">
-            <p>Symbol</p>
-            <p>Name</p>
-            <p>Price</p>
-            <p>Volume</p>
-            <p>Market Cap</p>
-            <p>Change</p>
-        </div>
         <table id="coinTable">
             <thead>
               <tr>
+                <th>Icon</th>
                 <th>Symbol</th>
                 <th>Name</th>
                 <th>Price</th>
-                <th>Volume</th>
+                <th>Volume 24h</th>
                 <th>Market Cap</th>
                 <th>Change</th>
                 <th>Action</th>
@@ -86,12 +79,13 @@
             <tbody>
               <%for(coin of coins){%>
                 <tr>
+                  <td><img width="50px" src="<%=coin.iconUrl%>"/></td>
                   <td><%=coin.symbol%></td>
                   <td><%=coin.name%></td>
                   <td><%=coin.price%></td>
-                  <td><%=coin.volume%></td>
+                  <td><%=coin.volumen24%></td>
                   <td><%=coin.marketCap%></td>
-                  <td><%=coin.change%></td>
+                  <td><%=coin.priceChange%></td>
                   <td><button onClick="changeCurrent(<%=coin.id%>)" id="btnCoin<%=coin.id%>">Buy/Sell</button></td>
                 </tr>
               <%}%>
@@ -102,11 +96,15 @@
 
         body {
             font-family: 'Roboto';
+            margin: 0px;
+
         }
         table {
         border-collapse: collapse;
-        width: 100%;
-        margin: 20px 0;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        border-spacing: 0 15px;
         }
 
         th,
@@ -119,7 +117,6 @@
         .tradePanel{
             width: 80%;
             border: #333;
-            
         }
 
         th {
@@ -130,6 +127,12 @@
         tbody tr:hover {
         background-color: #f5f5f5;
         }
+
+        tbody tr{
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+        }
+
         button {
         border-radius: 10px;
         background-color: orange;
@@ -142,6 +145,7 @@
         margin: 4px 2px;
         cursor: pointer;
         transition: 0.5s;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         }
 
         .panel{
@@ -149,8 +153,10 @@
             height: 364px;
             background: #FFFFFF;
             border: 1px solid #C4C4C4;
-            box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.25);
+            box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25);
             border-radius: 5px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
 
@@ -167,6 +173,20 @@
         font-weight: bold;
         margin-bottom: 10px;
         }
+        header{
+            display: flex;
+            flex-direction: row;
+            background-color: #101014;
+            margin-top: -10px;
+            width: 100%;
+        }
+        #email{
+            color: whitesmoke;
+        }
+        #balance{
+            color: whitesmoke;
+        }
+
     </style>
     <script>
         const myTable = document.getElementById('coinTable');  
@@ -190,6 +210,7 @@
         function changeCurrent(id){
             console.log("Funkcja = " , id)
             select.value = id;
+            window.scrollTo(0, 0)
         }
     </script>
 </body>
