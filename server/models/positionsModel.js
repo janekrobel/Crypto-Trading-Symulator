@@ -37,7 +37,7 @@ exports.getValueOfAllPositionsByEmail = (_email) => {
 exports.createPositions = (position) =>{
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
     return db.promise().query(
-        "INSERT INTO POSITION (`id_user`,`id_coin`, `price`, `amounts`, `date`, `type`) VALUES (?,?,?,?,?,?)",[position.id_user , parseInt(position.id_coin), position.price, parseFloat(position.amounts), now, position.type]).then((result, fields) => {
+        "INSERT INTO `POSITION` (`id_user`,`id_coin`, `price`, `amounts`, `date`, `type`) VALUES (?,?,?,?,?,?)",[position.id_user , parseInt(position.id_coin), position.price, parseFloat(position.amounts), now, position.type]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })

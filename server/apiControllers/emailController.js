@@ -6,13 +6,13 @@ exports.sendLoginEmail = async(_to, link) =>{
         host: 'smtp.gmail.com',
         secure: false,
         auth: {
-          user: 'cryptotradingsymulator@gmail.com',
-          pass: 'fxmxnjmbfuosybba' //add to .env
+          user: 'tradingsymulatorproject@gmail.com',
+          pass: process.env.EMAIL
         }
       });
       
     const mailOptions = {
-        from: 'cryptotradingsymulator@gmail.com',
+        from: 'tradingsymulatorproject@gmail.com',
         to: _to,
         subject: 'Complete your login!',
         text: link
