@@ -1,8 +1,30 @@
 const jwt = require('jsonwebtoken');
+const accountModel = require('../models/userModel');
 const emailController = require('./emailController.js');
 
 
 exports.postLogin = (req, res) => {
+    accountModel.getUserByEmail(req.body.email).then((result)=>{
+        if(typeof(result) === 'undefined'){
+            console.log("new");
+            accountModel.createUser(req.body.email).then((result)=>{
+                const email = req.body.email;
+                const token = jwt.sign({ email }, process.env.SECRETKEY);
+                const loginLink = `http://localhost:3001/login/link?key=${token}`;
+                emailController.sendLoginEmail(email, loginLink).then(() => {
+                    res.send(true);
+                });
+            });
+        }
+        else{
+            const email = req.body.email;
+            const token = jwt.sign({ email }, process.env.SECRETKEY);
+            const loginLink = `http://localhost:3001/login/link?key=${token}`;
+            emailController.sendLoginEmail(email, loginLink).then(() => {
+                res.send(true);
+            });
+        }           
+    });
     const email = req.body.email;
     const token = jwt.sign({ email }, process.env.SECRETKEY);
     const loginLink = `http://localhost:3001/login/link?key=${token}`;

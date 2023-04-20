@@ -11,9 +11,7 @@ exports.getPositionsById = (req, res) => {
 };
 
 exports.createPositions = (req, res) => {
-    console.log(req.body);
-    console.log("hey");
-    userModel.getUserByEmail("robelkowo@gmail.com").then((user)=> {
+    userModel.getUserByEmail(req.email).then((user)=> {
         coinModel.getCoinById(req.body.coin_id).then((coin) => {
             console.log(coin);
             var balance = user.balance-(coin.price * req.body.amounts)
@@ -40,7 +38,7 @@ exports.closePosition = (req, res) => {
     model.getPositionsById(req.query.id).then((result)=>{
         //check "result.id_coin" + "coinResult.price" + "result.amounts" + "result.type"
          coinModel.getCoinById(result.id_coin).then((coinResult)=>{
-            userModel.getUserByEmail("robelkowo@gmail.com").then((userResult)=>{
+            userModel.getUserByEmail(req.email).then((userResult)=>{
                 console.log(result)
                 console.log(coinResult)
                 console.log(userResult)

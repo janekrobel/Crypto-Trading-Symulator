@@ -3,14 +3,14 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../apiControllers/positionController.js");
 
-//router.get("/", middleware, controller.getPositionsByUserEmail);
+router.get("/", middleware.bodyverifyToken, controller.getPositionsByUserEmail);
 
-router.post("/", controller.createPositions);
+router.post("/",middleware.bodyverifyToken, controller.createPositions);
 
-router.put("/" ,controller.setPosition);
+router.put("/",middleware.bodyverifyToken,controller.setPosition);
 
-router.get("/", controller.closePosition);
+router.get("/", middleware.bodyverifyToken, controller.closePosition);
 
-router.get("/value", controller.getValueOfAllPositionsByEmail);
+router.get("/value",middleware.bodyverifyToken, controller.getValueOfAllPositionsByEmail);
 
 module.exports = router;

@@ -27,14 +27,12 @@ app.use("/users", userRouting);
 app.use("/positions", positionRouting);
 app.use("/login", loginRouting);
 
-//app.get('/', middleware.bodyverifyToken, (req,res) => {
-    //let _postitions = positionModel.getPositionsByUserEmail(req.email);
-
-app.get('/', async (req,res) => {
-    let _positions = await positionModel.getPositionsByUserEmail("robelkowo@gmail.com");
-    let _account = await userModel.getUserByEmail("robelkowo@gmail.com");
+app.get('/', middleware.bodyverifyToken, async (req,res) => {
+    console.log(req.email);
+    let _positions = await positionModel.getPositionsByUserEmail(req.email);
+    let _account = await userModel.getUserByEmail(req.email);
     let _coins = await coinModel.getAllCoins(); 
-    let _totalValue = await positionModel.getValueOfAllPositionsByEmail("robelkowo@gmail.com");
+    let _totalValue = await positionModel.getValueOfAllPositionsByEmail(req.email);
     let _totalBalance = _totalValue[0]['SUM(amounts*(SELECT price FROM COIN WHERE id = id_coin))'] + _account.balance
 
     console.log(_totalValue[0]['SUM(amounts*(SELECT price FROM COIN WHERE id = id_coin))'])

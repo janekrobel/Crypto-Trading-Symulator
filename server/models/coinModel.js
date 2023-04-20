@@ -3,7 +3,7 @@ const db = require('../config/mysql2/db.js');
 
 exports.getAllCoins = () => {
     return db.promise().query('SELECT * FROM COIN ORDER BY marketCap DESC').then((result, fields) => {
-        console.log("DB: ", result[0]);
+        //console.log("DB: ", result[0]);
         return result[0];
     })
     .catch(err => {
