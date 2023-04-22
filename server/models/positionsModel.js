@@ -10,6 +10,7 @@ exports.getPositionsByUserEmail = (userEmail) => {
         throw err;
     })
 }
+
 exports.getPositionsById = (_id) => {
     return db.promise().query('SELECT * FROM `POSITION` WHERE id = ?',[_id]).then((result, fields) => {
         console.log("DB: ", result[0][0]);
@@ -20,19 +21,6 @@ exports.getPositionsById = (_id) => {
         throw err;
     })
 }
-
-exports.getValueOfAllPositionsByEmail = (_email) => {
-    //check if correct
-    return db.promise().query('SELECT SUM(amounts*(SELECT price FROM COIN WHERE id = id_coin)) FROM `POSITION` WHERE id_user = (SELECT id FROM USER WHERE email = ?);',[_email]).then((result, fields) => {
-        console.log("DB: ", result[0]);
-        return result[0];
-    })
-    .catch(err => {
-        console.log(err);
-        throw err;
-    })
-};
-
 
 exports.createPositions = (position) =>{
     const now = new Date().toISOString().slice(0, 19).replace('T', ' ');

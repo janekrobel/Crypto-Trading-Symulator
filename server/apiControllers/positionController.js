@@ -36,7 +36,6 @@ exports.createPositions = (req, res) => {
 
 exports.closePosition = (req, res) => {
     model.getPositionsById(req.query.id).then((result)=>{
-        //check "result.id_coin" + "coinResult.price" + "result.amounts" + "result.type"
          coinModel.getCoinById(result.id_coin).then((coinResult)=>{
             userModel.getUserByEmail(req.email).then((userResult)=>{
                 console.log(result)
@@ -57,9 +56,25 @@ exports.closePosition = (req, res) => {
 }
 
 exports.getValueOfAllPositionsByEmail = (req,res) => {
-    model.getValueOfAllPositionsByEmail(req.query.email).then((result)=>{
-        res.json(result);
-    });
+    userModel.getPositionsByUserEmail(req.email).then((positions)=>{
+        coinModel.getAllCoins().then((coinList)=>{
+            totalValue = 0;
+            positions.foreach((position)=>{
+                let wspolczynnik = (position.type === "Long") ? -1 : 1
+                let startPos = position.price * position.amounts
+                
+                coinList.findIndex(obj => obj.id === position.id_coin);
+
+                let pozycja = startPos - coin.price * position.amounts
+                let profit = pozycja * wspolczynnik;
+
+                totalValue += profit + startPos;
+            })
+            res.json(totalValue);
+            
+        });
+    })
+    
 };
 
 exports.setPosition = (req,res) => {
