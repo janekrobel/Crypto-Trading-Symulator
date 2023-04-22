@@ -30,8 +30,11 @@
                 <input onchange="changeAmounts()" id="priceInput" step="0.000001" placeholder="Eg. 0.033" name="amounts" type="number"></input>
                 <input name="type" value="Long" type="submit" id="long"></input>
                 <input name="type" value="Short" type="submit" id="short"></input>
+                <p style="position: absolute; font-size: 150px;"><%=message%></p>
+                <p style="position: absolute; font-size: 150px;"><%=errorMessage%></p>
             </form>
         </div>
+        
     </div>
     <div class="positionsPanel">
         <p class="title">Your Positions: </p>

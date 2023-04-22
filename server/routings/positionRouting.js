@@ -11,6 +11,4 @@ router.put("/",middleware.bodyverifyToken,controller.setPosition);
 
 router.get("/", middleware.bodyverifyToken, controller.closePosition);
 
-router.get("/value",middleware.bodyverifyToken, controller.getValueOfAllPositionsByEmail);
-
 module.exports = router;

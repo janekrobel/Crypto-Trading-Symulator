@@ -27,25 +27,65 @@ app.use("/users", userRouting);
 app.use("/positions", positionRouting);
 app.use("/login", loginRouting);
 
-app.get('/', middleware.bodyverifyToken, async (req,res) => {
+app.get('/', middleware.bodyverifyToken, (req,res) => {
     console.log(req.email);
-    let _positions = await positionModel.getPositionsByUserEmail(req.email);
-    let _account = await userModel.getUserByEmail(req.email);
-    let _coins = await coinModel.getAllCoins(); 
-    let _totalValue = await positionModel.getValueOfAllPositionsByEmail(req.email);
-    let _totalBalance = _totalValue[0]['SUM(amounts*(SELECT price FROM COIN WHERE id = id_coin))'] + _account.balance
+    let _positions = positionModel.getPositionsByUserEmail(req.email);
+    let _account = userModel.getUserByEmail(req.email);
+    let _coins = coinModel.getAllCoins(); 
+    let _totalValue = getTotalValue(req.email);
+    
+    Promise.all([_positions,_account,_coins,_totalValue]).then((result)=>{
+        let positions = result[0];
+        let account = result[1];
+        let coins = result[2];
+        let totalValue = result[3];
+        let totalBalance = totalValue + account.balance
+        let message = req.query.message || null;
+        let errorMesage = req.query.errorMessage || null;
 
-    console.log(_totalValue[0]['SUM(amounts*(SELECT price FROM COIN WHERE id = id_coin))'])
+        totalValue = Math.round(totalValue * 1000)/1000
+        totalBalance =  Math.round(totalBalance * 1000)/1000
 
-    res.render('index',{
-        positions:_positions,
-        coins:_coins,
-        account: _account,
-        totalValue:_totalValue[0]['SUM(amounts*(SELECT price FROM COIN WHERE id = id_coin))'],
-        totalBalance: _totalBalance
+        console.log("errorMsg", errorMesage);
+        console.log("msg", message);
+
+        res.render('index',{
+            positions: positions,
+            coins: coins,
+            account: account,
+            totalValue: totalValue,
+            totalBalance: totalBalance,
+            message: message,
+            errorMessage: errorMesage
+        })
+    });
+});
+
+const getTotalValue = (email) => {
+    return positionModel.getPositionsByUserEmail(email).then((positions)=>{
+        return coinModel.getAllCoins().then((coinList)=>{
+            let totalValue = 0;
+            for(position of positions){
+                let wspolczynnik = (position.type === "Long") ? -1 : 1
+                let startPos = position.price * position.amounts;
+
+                const isIndex = (element) => element.id === position.id_coin;
+                
+                let coinIndex = coinList.findIndex(isIndex);
+                let coin = coinList[coinIndex];
+
+                let currentValue = startPos - coin.price * position.amounts;
+                let profit = currentValue * wspolczynnik;
+
+                totalValue += profit + startPos;
+                
+            };
+            return totalValue;
+            
+        });
     })
-  });
-  
+}
+
 
 app.use(cors({
     origin: '*'
