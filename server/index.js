@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const dotenv = require('dotenv');
+dotenv.config();
 
 const cookieParser = require('cookie-parser');
 const userRouting = require('./routings/userRouting.js');
@@ -15,12 +16,14 @@ const nodemailer = require('nodemailer');
 const middleware = require('./middleware/middleware.js');
 
 app.set('view engine', 'ejs');
-
-dotenv.config();
-
+app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+    origin: '*'
+}));
+
 
 app.use("/coins", coinRouting);
 app.use("/users", userRouting);
@@ -61,6 +64,11 @@ app.get('/', middleware.bodyverifyToken, (req,res) => {
     });
 });
 
+app.get('/user/:id', (req, res) => {
+    
+});
+
+
 const getTotalValue = (email) => {
     return positionModel.getPositionsByUserEmail(email).then((positions)=>{
         return coinModel.getAllCoins().then((coinList)=>{
@@ -87,9 +95,6 @@ const getTotalValue = (email) => {
 }
 
 
-app.use(cors({
-    origin: '*'
-}));
 
 
 app.listen(3001); 

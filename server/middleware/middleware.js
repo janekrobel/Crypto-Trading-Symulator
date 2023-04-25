@@ -17,7 +17,7 @@ exports.bodyverifyToken = (req, res, next) => {
         });
     }
     else{
-        res.sendStatus(403);
+        res.redirect('/login');
     }
 
 }

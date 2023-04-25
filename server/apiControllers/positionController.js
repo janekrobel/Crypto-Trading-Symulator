@@ -1,7 +1,6 @@
 const model = require("../models/positionsModel.js");
 const coinModel = require("../models/coinModel.js");
 const userModel = require("../models/userModel.js");
-const positionModel = require("../models/positionsModel.js");
 
 exports.getPositionsByUserEmail = (req, res) => {
     model.getPositionsByUserEmail(req.email).then((result)=>{ res.json(result)});
@@ -13,8 +12,7 @@ exports.getPositionsById = (req, res) => {
 
 exports.createPositions = (req, res) => {
     userModel.getUserByEmail(req.email).then((user)=> {
-        return coinModel.getCoinById(req.body.coin_id)
-            .then((coin) => {
+        coinModel.getCoinById(req.body.coin_id).then((coin) => {
             console.log(coin);
             var balance = user.balance-(coin.price * req.body.amounts)
             console.log(balance);
@@ -27,17 +25,9 @@ exports.createPositions = (req, res) => {
                     amounts: req.body.amounts
                 }
                 console.log(position);
-                userModel.setUser({balance: balance, id: user.id})
-                .then(()=>{
-                    return model.createPositions(position)
-                        .then((result)=>{
-                            res.json(result);
-                            res.redirect("/?message=created-position");
-                        });
+                userModel.setUser({balance: balance, id: user.id}).then(()=>{
+                    model.createPositions(position).then((result)=>{ res.redirect('/?message=Dodano')});
                 });
-            }
-            else{
-                res.redirect("/?errorMessage=invalid-balance");
             };
         });
        
@@ -58,12 +48,34 @@ exports.closePosition = (req, res) => {
                 let profit = pozycja * wspolczynnik;
 
                 userModel.setUser({balance: startPos + profit + userResult.balance, id: userResult.id})
-                model.closePosition(req.query.id).then((result)=>{ res.json(result)});
+                model.closePosition(req.query.id).then((result)=>{ res.redirect('/')});
               
             });
         })
     });
 }
+
+exports.getValueOfAllPositionsByEmail = (req,res) => {
+    return userModel.getPositionsByUserEmail(req.email).then((positions)=>{
+        coinModel.getAllCoins().then((coinList)=>{
+            totalValue = 0;
+            positions.foreach((position)=>{
+                let wspolczynnik = (position.type === "Long") ? -1 : 1
+                let startPos = position.price * position.amounts
+                
+                coinList.findIndex(obj => obj.id === position.id_coin);
+
+                let pozycja = startPos - coin.price * position.amounts
+                let profit = pozycja * wspolczynnik;
+
+                totalValue += profit + startPos;
+            })
+            res.json(totalValue);
+            
+        });
+    })
+    
+};
 
 exports.setPosition = (req,res) => {
     model.setPosition(req.body).then((result)=>{{res.json(result)}});

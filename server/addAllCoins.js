@@ -1,6 +1,9 @@
+const dotenv = require('dotenv')
+dotenv.config();
 const coinController = require('./apiControllers/coinController');
 
 const axios = require("axios");
+
 
 let coins = [];
 
@@ -13,7 +16,7 @@ const options = {
     'tiers[0]': '1',
     orderBy: 'marketCap',
     orderDirection: 'desc',
-    limit: '100',
+    limit: '10',
     offset: '0'
   },
   headers: {
