@@ -12,6 +12,39 @@ table {
     border-spacing: 0 20px;
 }
 
+#userForm{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#bio{  
+    width: 500px;
+    height: 400px;
+
+}
+
+#img{
+    border-radius: 10px;
+    width: 200px;
+    background-color: orange;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 20px;
+    height: 40px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.5s;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    
+}
+
 th,
 td {
 text-align: left;

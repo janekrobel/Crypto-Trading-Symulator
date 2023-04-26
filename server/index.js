@@ -64,8 +64,9 @@ app.get('/', middleware.bodyverifyToken, (req,res) => {
     });
 });
 
-app.get('/user/:id', (req, res) => {
-    
+app.get('/user/:id', async (req, res) => {
+    let user = await userModel.getUserById(req.query.id);
+    res.render('form', id=user.id, message="", errorMessage="", totalBalance="", account=user);
 });
 
 
