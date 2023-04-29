@@ -13,6 +13,9 @@
     <header>
         <img src="">
         <p id="balance">Balance: <%=totalBalance%></p>
-        <a style="text-decoration: none;" href="/user" id="email" class="email"><%=account.email%></a>
-        <button>Log Out</button>
+        <div class="user-info">
+            <img src="/img/<%=account.img%>" alt="" width="30px" height="30px">
+            <a style="text-decoration: none;" href="/user" id="email" class="email"><%=account.email%></a>
+            <button>Log Out</button>
+        </div>
     </header>

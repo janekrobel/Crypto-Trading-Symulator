@@ -1,4 +1,6 @@
 const model = require("../models/userModel.js");
+const uuid = require('uuid')
+const sharp = require('sharp')
 
 exports.getUserById = (req,res) => { 
     model.getUserById(req.query.id).then((result)=>{ res.json(result)});
@@ -13,20 +15,32 @@ exports.createUser = (req,res) => {
 }
 
 exports.setUser = async (req,res) => { 
-    let image = req.body.img;
-    const imageBuffer = Buffer.from(image, 'base64')
+    let image = req.file;
+    console.log("FILE =" , image)
+    // const imageBuffer = Buffer.from(image.buffer, 'base64')
     let imageId = uuid.v4();
-    const jpegBuffer = await sharp(imageBuffer).resize(624, 624).toFile('output.webp');                     
-    const jpegFileName = `${imageId}.webp`;
-    await fs.promises.writeFile("../images/" + jpegFileName, jpegBuffer);
+    let imageBuffer = image.buffer;
+    
+    await sharp(imageBuffer)
+    .toFormat('webp')
+    .toFile("./public/img/" + imageId , (err, info) => {
+        if(err) throw err
+        console.log("Dodano plik : " , imageId , '\n' ,info)
+    })
+
+
+    // const jpegBuffer = await sharp(image.buffer).resize(624, 624).toFile('output.webp');                     
+    // const jpegFileName = `${imageId}.webp`;
+    // await fs.promises.writeFile("../images/" + jpegFileName, jpegBuffer);
 
     user = {
         email : req.email,
         img : imageId,
-        bio: req.body.bio
+        about: req.body.bio
     }
 
-    model.setUser(user).then((result)=>{ res.json(result)});
+    model.setUser(user)
+        .then((result)=>{ res.json(result)});
 }
 
 exports.deleteUser = (req,res) => {

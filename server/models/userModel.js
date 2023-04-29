@@ -47,7 +47,7 @@ exports.setUserBalance = (user) => {
 
 
 exports.setUser = (user) => {
-    return db.promise().query('UPDATE USER SET img = ? about = ? WHERE email = ?',[user.img, user.about, user.email]).then((result, fields) => {
+    return db.promise().query('UPDATE USER SET img = ?, about = ? WHERE email = ?',[user.img, user.about, user.email]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })
