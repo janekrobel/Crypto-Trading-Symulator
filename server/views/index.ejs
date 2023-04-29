@@ -1,4 +1,8 @@
 <%- include('./fragments/header.ejs') %>
+    <div id="messageDiv">
+        <p id="message" style="color: green;"><%=message%></p>
+        <p id="errorMessage" style="color: red;"><%=errorMessage%></p>
+    </div>  
     <div class="tradePanel">
         <p class="title">Open a position:</p>
         <div id="panel" class="panel">
@@ -71,16 +75,14 @@
                   <td><%=coin.volumen24%></td>
                   <td><%=coin.marketCap%></td>
                   <td><%=coin.priceChange%></td>
-                  <td><button onClick="changeCurrent(<%=coin.id%>)" id="btnCoin<%=coin.id%>">Buy/Sell</button></td>
+                  <td><button class="closeBtn" onClick="changeCurrent(<%=coin.id%>)" id="btnCoin<%=coin.id%>">Buy/Sell</button></td>
                 </tr>
               <%}%>
             </tbody>
         </table>
     </div>
-
     <script src="./js/index.js">
-       
-        
+
     </script>
 </body>
 </html>

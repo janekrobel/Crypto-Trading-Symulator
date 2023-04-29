@@ -14,6 +14,7 @@ table {
 
 #userForm{
     width: 100%;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,28 +22,42 @@ table {
 }
 
 #bio{  
-    width: 500px;
-    height: 400px;
+    width: 400px;
+    height: 200px;
+    font-size: 20px;
+    
+}
 
+#sumbit{
+    margin-top: 30px;
+    width: 100px;
+    color: white;
+    background-color: black;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: none;
+    border-radius: 5px;
+
+}
+
+label{
+    font-size: 20px;
+    margin-top: 10px;
 }
 
 #img{
     border-radius: 10px;
-    width: 200px;
+    width: 240px;
     background-color: orange;
     border: none;
     padding: 8px 16px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    margin-right: 20px;
     font-size: 20px;
-    height: 40px;
+    height: 20px;
     font-weight: 500;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
     transition: 0.5s;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    
 }
 
 th,
@@ -68,7 +83,7 @@ border-bottom: 1px solid #ddd;
     grid-template-rows: 50px 66px 77px 77px;
 }
 
-a{
+closeBtn{
     border-radius: 10px;
     width: 100px;
     height: 20px;
@@ -86,7 +101,14 @@ a{
     color: black;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+
 a:hover{
+    opacity: 0.8;
+}
+
+
+
+.closeBtn:hover{
     transform: scale(1.1);
     opacity: 0.8;
 }

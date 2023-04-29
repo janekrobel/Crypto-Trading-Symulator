@@ -33,9 +33,21 @@ exports.createUser = (email) => {
         throw err;
     })
 }
-//updateUser
-exports.setUser = (user) => {
+
+exports.setUserBalance = (user) => {
     return db.promise().query('UPDATE USER SET balance = ? WHERE id = ?',[user.balance, user.id]).then((result, fields) => {
+        console.log("DB: ", result[0]);
+        return result[0];
+    })
+    .catch(err => {
+        console.log(err);
+        throw err;
+    })
+}
+
+
+exports.setUser = (user) => {
+    return db.promise().query('UPDATE USER SET img = ? about = ? WHERE email = ?',[user.img, user.about, user.email]).then((result, fields) => {
         console.log("DB: ", result[0]);
         return result[0];
     })

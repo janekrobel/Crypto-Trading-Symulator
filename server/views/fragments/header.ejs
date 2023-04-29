@@ -10,13 +10,9 @@
     <link rel="stylesheet" href="./css/index.css"/>
 </head>
 <body>
-    <div id="messageDiv">
-        <p id="message" style="color: green;"><%=message%></p>
-        <p id="errorMessage" style="color: red;"><%=errorMessage%></p>
-    </div>
     <header>
         <img src="">
         <p id="balance">Balance: <%=totalBalance%></p>
-        <p id="email" class="email"><%=account.email%></p>
+        <a style="text-decoration: none;" href="/user" id="email" class="email"><%=account.email%></a>
         <button>Log Out</button>
     </header>

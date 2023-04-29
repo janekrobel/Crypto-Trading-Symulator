@@ -9,7 +9,7 @@ router.get("/byEmail/",middleware.bodyverifyToken, controller.getUserByEmail);
 
 router.post("/", controller.createUser);
 
-router.put("/",middleware.bodyverifyToken, controller.setUser);
+router.post("/edit",middleware.bodyverifyToken, controller.setUser);
 
 router.delete("/",middleware.bodyverifyToken, controller.deleteUser);
 

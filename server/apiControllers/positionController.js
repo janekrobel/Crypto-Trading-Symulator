@@ -25,7 +25,7 @@ exports.createPositions = (req, res) => {
                     amounts: req.body.amounts
                 }
                 console.log(position);
-                userModel.setUser({balance: balance, id: user.id}).then(()=>{
+                userModel.setUserBalance({balance: balance, id: user.id}).then(()=>{
                     model.createPositions(position).then((result)=>{ res.redirect('/?message=Dodano')});
                 });
             };
@@ -47,7 +47,7 @@ exports.closePosition = (req, res) => {
                 let pozycja = startPos - coinResult.price * result.amounts
                 let profit = pozycja * wspolczynnik;
 
-                userModel.setUser({balance: startPos + profit + userResult.balance, id: userResult.id})
+                userModel.setUserBalance({balance: startPos + profit + userResult.balance, id: userResult.id})
                 model.closePosition(req.query.id).then((result)=>{ res.redirect('/')});
               
             });

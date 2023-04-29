@@ -1,8 +1,9 @@
 <%- include('./fragments/header.ejs') %>
-    <form method="put" action="/users" id="userForm">
-        <label for="bio">Profile Description</label><br>
-        <input type="text" id="bio">
-        <label for="profileImg">Image</label><br>
-        <input type="file" id="img">
-    </form>
+<form method="POST" action="/users/edit" id="userForm" enctype="multipart/form-data">
+  <label for="bio">Profile Description</label><br>
+  <textarea name="bio" id="bio"></textarea>
+  <label for="profileImg">Image</label><br>
+  <input type="file" accept="image/*" name="img" id="img">
+  <input id="sumbit" type="submit">
+</form>
 </body>
