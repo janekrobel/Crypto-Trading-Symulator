@@ -40,7 +40,6 @@ function changeCurrent(id){
 }
 
 
-
 const message = messageDiv.innerHTML;
 const m = mess.innerHTML;
 const e = errorMessage.innerHTML;
