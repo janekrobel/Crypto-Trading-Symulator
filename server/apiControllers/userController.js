@@ -15,18 +15,22 @@ exports.createUser = (req,res) => {
 }
 
 exports.setUser = async (req,res) => { 
+    let imageId = ""
     let image = req.file;
-    console.log("FILE =" , image)
-    // const imageBuffer = Buffer.from(image.buffer, 'base64')
-    let imageId = uuid.v4();
-    let imageBuffer = image.buffer;
-    
-    await sharp(imageBuffer)
-    .toFormat('webp')
-    .toFile("./public/img/" + imageId , (err, info) => {
-        if(err) throw err
-        console.log("Dodano plik : " , imageId , '\n' ,info)
+    if(typeof(image) != 'undefined'){
+        console.log("FILE =" , image)
+        // const imageBuffer = Buffer.from(image.buffer, 'base64')
+        imageId = uuid.v4();
+        let imageBuffer = image.buffer;
+        
+        await sharp(imageBuffer)
+        .toFormat('webp')
+        .toFile("./public/img/" + imageId , (err, info) => {
+            if(err) throw err
+            console.log("Dodano plik : " , imageId , '\n' ,info)
     })
+    }
+    
 
 
     // const jpegBuffer = await sharp(image.buffer).resize(624, 624).toFile('output.webp');                     
@@ -40,7 +44,7 @@ exports.setUser = async (req,res) => {
     }
 
     model.setUser(user)
-        .then((result)=>{ res.json(result)});
+        .then((result)=>{ res.redirect("/")});
 }
 
 exports.deleteUser = (req,res) => {

@@ -44,7 +44,7 @@
                         <td><%=position.amounts%></td>
                         <td><%=position.date%></td>
                         <td><%=position.type%></td>
-                        <td><a href='/positions?id=<%=position.id%>'>Close</a></td>
+                        <td><a class="trashCan" href='/positions?id=<%=position.id%>'><img width="30px" src="./img/trashCan.png"></a></td>
                     </tr>
                 <%}%>
             </tbody>
