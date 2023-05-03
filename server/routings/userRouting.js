@@ -7,14 +7,14 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage })
 
 
-router.get("/",middleware.bodyverifyToken, controller.getUserById);
+router.get("/", middleware.bodyverifyToken, controller.getUserById);
 
-router.get("/byEmail/",middleware.bodyverifyToken, controller.getUserByEmail);
+router.get("/byEmail/", middleware.bodyverifyToken, controller.getUserByEmail);
 
 router.post("/", controller.createUser);
 
-router.post("/edit",middleware.bodyverifyToken, upload.single('avatar'), controller.setUser);
+router.post("/edit", middleware.bodyverifyToken, upload.single('avatar'), controller.setUser);
 
-router.delete("/",middleware.bodyverifyToken, controller.deleteUser);
+router.delete("/", middleware.bodyverifyToken, controller.deleteUser);
 
 module.exports = router;

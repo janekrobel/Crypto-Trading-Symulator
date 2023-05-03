@@ -7,7 +7,6 @@ const messageDiv = document.getElementById('messageDiv');
 const mess = document.getElementById('message');
 const errorMessage = document.getElementById('errorMessage');
 
-
 // let tableCounter = 1;
 
 // for (let row of myTable.rows) {

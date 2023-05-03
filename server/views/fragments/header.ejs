@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Document</title>
     <link rel="stylesheet" href="./css/index.css"/>
+    <script src="./js/logout.js" defer></script>
 </head>
 <body>
     <header>
@@ -21,9 +22,6 @@
             <button onclick="clearCookie()">Log Out</button>
         </div>
         <script>
-            function clearCookie() {
-                document.cookie ="verification=; expires=Thu, 01 Jan 1970 00:00:01 GMT;"
-                window.location.replace("http://localhost:3001/login");
-            }
+          
         </script>
     </header>
