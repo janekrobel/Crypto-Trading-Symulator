@@ -9,7 +9,10 @@ exports.postLogin = (req, res) => {
             console.log("new");
             accountModel.createUser(req.body.email).then((result)=>{
                 const email = req.body.email;
-                const token = jwt.sign({ email }, process.env.SECRETKEY);
+                const now = new Date();
+                const date = now.toLocaleString('en-US', { timeZone: 'UTC' });
+                console.log(date);
+                const token = jwt.sign({ email, date}, process.env.SECRETKEY);
                 const loginLink = `http://localhost:3001/login/link?key=${token}`;
                 emailController.sendLoginEmail(email, loginLink).then(() => {
                     res.send(true);
@@ -18,7 +21,10 @@ exports.postLogin = (req, res) => {
         }
         else{
             const email = req.body.email;
-            const token = jwt.sign({ email }, process.env.SECRETKEY);
+            const now = new Date();
+            const date = now.toLocaleString('en-US', { timeZone: 'UTC' });
+            console.log(date);
+            const token = jwt.sign({ email , date}, process.env.SECRETKEY);
             const loginLink = `http://localhost:3001/login/link?key=${token}`;
             emailController.sendLoginEmail(email, loginLink).then(() => {
                 res.send(true);
@@ -30,12 +36,23 @@ exports.postLogin = (req, res) => {
 exports.getLink = (req, res) => {
     const key = req.query.key;
     try {
-        const { email } = jwt.verify(key,process.env.SECRETKEY);
-        console.log("cookies");
-        res.cookie('verification', key, { maxAge: 7200000 });
-        res.redirect("/");
+        const { email, date } = jwt.verify(key,process.env.SECRETKEY);
+        const now = new Date();
+        console.log(date);
+        const linkDate = new Date(Date.parse(date));
+        const timeDiff = now.getTime() - linkDate.getTime();
+        console.log(timeDiff);
+        if(timeDiff > 72000000){
+            res.sendStatus(403);
+        }
+        else{
+            console.log("cookies");
+            res.cookie('verification', key, { maxAge: 7200000 });
+            res.redirect("/");
+        }
     }
     catch(err){
+        console.log(err);
         res.send("Invalid login link");
     }
 };
