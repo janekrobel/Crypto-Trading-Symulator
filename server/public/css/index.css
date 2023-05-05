@@ -21,7 +21,7 @@ table {
     align-items: center;
 }
 
-#bio{  
+.desc{  
     width: 400px;
     height: 200px;
     font-size: 20px;
@@ -352,4 +352,16 @@ header{
     width: 300px;
     display: flex;
     flex-direction: row;
+}
+form{
+    display: grid;
+
+}
+
+.error-input{
+    border: 2px solid red;
+}
+
+.error-text{
+    color: #FF3D3D;
 }

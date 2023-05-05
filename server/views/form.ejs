@@ -1,9 +1,16 @@
 <%- include('./fragments/header.ejs') %>
-<form method="POST" action="/users/edit" id="userForm" enctype="multipart/form-data">
-  <label for="bio">Profile Description</label><br>
-  <textarea name="bio" id="bio"></textarea>
-  <label for="profileImg">Image</label><br>
+<script src="./js/valid_form.js" defer>
+
+</script>
+
+<form method="POST" action="/users/edit" id="userForm" enctype="multipart/form-data" novalidate onsubmit="return valid()">
+  <label for="bio">Profile Description</label>
+  <textarea class="desc" name="bio" id="desc"><%=account.about%></textarea>
+  <span id="error-desc" class="error-text"></span>
+  <label for="profileImg">Image</label>
   <input type="file" accept="image/*" name="avatar" id="img">
+  <span id="error-img" class="error-text"></span>
+
   <input id="sumbit" type="submit">
 </form>
 </body>
