@@ -1,6 +1,7 @@
 const model = require("../models/positionsModel.js");
 const coinModel = require("../models/coinModel.js");
 const userModel = require("../models/userModel.js");
+const positionModel = require("../models/positionsModel.js");
 
 exports.getPositionsByUserEmail = (req, res) => {
     model.getPositionsByUserEmail(req.email).then((result)=>{ res.json(result)});
@@ -11,6 +12,12 @@ exports.getPositionsById = (req, res) => {
 };
 
 exports.createPositions = (req, res) => {
+    if(req.body.amounts <= 0){
+        res.sendStatus(401);
+    }
+    if(req.body.type != "Short" && req.body.type != "Long"){
+        res.sendStatus(401);
+    }
     userModel.getUserByEmail(req.email).then((user)=> {
         coinModel.getCoinById(req.body.coin_id).then((coin) => {
             console.log(coin);
@@ -55,27 +62,34 @@ exports.closePosition = (req, res) => {
     });
 }
 
-exports.getValueOfAllPositionsByEmail = (req,res) => {
-    return userModel.getPositionsByUserEmail(req.email).then((positions)=>{
-        coinModel.getAllCoins().then((coinList)=>{
-            totalValue = 0;
-            positions.foreach((position)=>{
+exports.getTotalValue = (email) => {
+    return positionModel.getPositionsByUserEmail(email).then((positions)=>{
+        return coinModel.getAllCoins().then(async (coinList)=>{
+            let totalValue = 0;
+            let userBalance = 0;
+            for(position of positions){
                 let wspolczynnik = (position.type === "Long") ? -1 : 1
-                let startPos = position.price * position.amounts
-                
-                coinList.findIndex(obj => obj.id === position.id_coin);
+                let startPos = position.price * position.amounts;
 
-                let pozycja = startPos - coin.price * position.amounts
-                let profit = pozycja * wspolczynnik;
+                const isIndex = (element) => element.id === position.id_coin;
+                
+                let coinIndex = coinList.findIndex(isIndex);
+                let coin = coinList[coinIndex];
+
+                let currentValue = startPos - coin.price * position.amounts;
+                let profit = currentValue * wspolczynnik;
 
                 totalValue += profit + startPos;
-            })
-            res.json(totalValue);
+                let user = await userModel.getUserByEmail(email);
+                userBalance = user.balance;
+                
+            };
+            return {totalValue: Math.round(totalValue * 1000)/1000
+            , totalBalance : Math.round((totalValue + userBalance) * 1000)/1000};
             
         });
     })
-    
-};
+}
 
 exports.setPosition = (req,res) => {
     model.setPosition(req.body).then((result)=>{{res.json(result)}});
