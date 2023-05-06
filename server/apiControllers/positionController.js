@@ -13,13 +13,15 @@ exports.getPositionsById = (req, res) => {
 
 exports.createPositions = (req, res) => {
     if(req.body.amounts <= 0){
-        res.sendStatus(401);
+        res.send(false);
     }
     if(req.body.type != "Short" && req.body.type != "Long"){
-        res.sendStatus(401);
+        res.send(false);
     }
     userModel.getUserByEmail(req.email).then((user)=> {
+        console.log("user" + user)
         coinModel.getCoinById(req.body.coin_id).then((coin) => {
+            console.log("coin" + coin)
             console.log(coin);
             var balance = user.balance-(coin.price * req.body.amounts)
             console.log(balance);
@@ -35,7 +37,10 @@ exports.createPositions = (req, res) => {
                 userModel.setUserBalance({balance: balance, id: user.id}).then(()=>{
                     model.createPositions(position).then((result)=>{ res.redirect('/?message=Dodano')});
                 });
-            };
+            }
+            else{
+                res.send(false);
+            }
         });
        
     });
