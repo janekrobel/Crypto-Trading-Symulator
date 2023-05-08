@@ -6,15 +6,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <title>Login</title>
-    <link rel="stylesheet" href="../styles/index.css"></link>
+    <link rel="stylesheet" href="./css/index.css"/>
 </head>
 <body>
+    <div class="loginHeader">
+        <img class="loginLogo" src="./img/logoWhite.png"/>
+    </div>  
     <h1>Log in</h1>
-    <form method="post" id="login" class="loginForm" action="/login">
+    <form style="margin-top: 100px;" method="post" id="login" class="loginForm" action="/login">
         <input name="email" id="email" placeholder="Eg. satoshi.nakamoto@gmail.com"></input>
         <input type="submit" id="submit"></input>
     </form>
+    <div class="currenciesPanel">
+        <table style="margin-top: 20px;" id="coinTable">
+            <thead>
+              <tr>
+                <th>Icon</th>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Volume 24h</th>
+                <th>Market Cap</th>
+                <th>Change</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%for(coin of coins){%>
+                <tr>
+                  <td><img width="50px" src="<%=coin.iconUrl%>"/></td>
+                  <td><%=coin.symbol%></td>
+                  <td><%=coin.name%></td>
+                  <td><%=coin.price%></td>
+                  <td><%=coin.volumen24%></td>
+                  <td><%=coin.marketCap%></td>
+                  <td><%=coin.priceChange%></td>
+                  <td><button class="closeBtn" onClick="changeCurrent(<%=coin.id%>)" id="btnCoin<%=coin.id%>">Buy/Sell</button></td>
+                </tr>
+              <%}%>
+            </tbody>
+        </table>
+    </div>
     <style>
+        form{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
         #email{
             width: 400px;
             height: 40px;   
@@ -24,6 +64,7 @@
             font-size: 20px;
             font-weight: 200;
             border: none;
+            color: black !important;
         }
         #submit{
             width: 100px;
@@ -37,9 +78,16 @@
         body{
             display: flex;
             flex-direction: column;
-            padding-top: 200px;
             align-items: center;
             font-family: 'Roboto';
+        }
+        .loginHeader{
+            width: 100%;
+        }
+
+        .loginLogo{
+            width: 100px;
+            margin: 10px;
         }
 
     </style>
