@@ -28,7 +28,6 @@
                 <th>Volume 24h</th>
                 <th>Market Cap</th>
                 <th>Change</th>
-                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -41,7 +40,6 @@
                   <td><%=coin.volumen24%></td>
                   <td><%=coin.marketCap%></td>
                   <td><%=coin.priceChange%></td>
-                  <td><button class="closeBtn" onClick="changeCurrent(<%=coin.id%>)" id="btnCoin<%=coin.id%>">Buy/Sell</button></td>
                 </tr>
               <%}%>
             </tbody>
