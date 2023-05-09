@@ -23,10 +23,10 @@ const options = {
   }
 };
 
-setInterval(updateCoins,300000);
 
 const updateCoins = () => {
-  allCoins = coinController.getAllCoins();
+console.log("START UPDATE COINS");
+  
   axios.request(options).then(function (response) {
     coins = response.data.data.coins;
     console.log(coins);
@@ -41,7 +41,12 @@ const updateCoins = () => {
       coinController.setCoin(coin);
       //remove from the list
   });
+console.log("END UPDATE COINS");
+
   }).catch(function (error) {
     console.error(error);
   });
 }
+
+updateCoins();
+setInterval(updateCoins, 300000);

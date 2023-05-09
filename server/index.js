@@ -15,6 +15,7 @@ const userModel = require('./models/userModel.js');
 const coinModel = require('./models/coinModel.js');
 const nodemailer = require('nodemailer');
 const middleware = require('./middleware/middleware.js');
+// const UPDATECOINSJOB = require('./updateCoins.js');
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));

@@ -23,7 +23,7 @@ const errorMessage = document.getElementById('errorMessage');
 // const balance = document.getElementById('balance');  
 
 function changeAmounts(){
-    valueSpent.innerHTML = "value in usd: " +  myTable.rows[select.value].cells[3].innerHTML * priceInput.value;
+    valueSpent.innerHTML = "Value in usd: " +  myTable.rows[select.value].cells[3].innerHTML * priceInput.value;
 }
 
 function changeSelect(){

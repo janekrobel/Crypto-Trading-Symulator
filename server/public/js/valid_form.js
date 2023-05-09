@@ -4,7 +4,6 @@ const img = document.getElementById('img')
 const errordesc = document.getElementById('error-desc')
 const errorimg = document.getElementById('error-img')
 
-
 function valid(){
     reset();
     let valid = true;
@@ -27,15 +26,25 @@ function reset(){
 
 
 function validPosition(){
-    let value = document.getElementById("valueSpent");
-    value = value.innerHTML.substring(str.indexOf(" ") + 1);
-    value = parseFloat(value);
 
-    let availableBalance = document.getElementById("availableBalance");
-    availableBalance = availableBalance.innerHTML.substring(str.indexOf(" ") + 1);
-    availableBalance = parseFloat(availableBalance);
-    console.log(availableBalance - value);
-    if(availableBalance - value < 0){
-        window.location.replace("http://localhost:3001/errorMessage=cannot_add_position");
-    }   
+    let valid = true;
+
+    let priceInput = document.getElementById("priceInput");
+
+    let valueInput = document.getElementById("valueSpent");
+    let value = valueInput.innerHTML.split(": ")[1];
+    let valueFloat  = parseFloat(value);
+
+    let avBalanceInput = document.getElementById("availableBalance");
+    let avBalance = avBalanceInput.innerHTML.split(": ")[1];
+    let avBalanceFloat = parseFloat(avBalance);
+    
+    if(avBalanceFloat < valueFloat){
+        priceInput.classList.add("error-input");
+        return false;
+    }
+    return true;
+    
+
+    
 }

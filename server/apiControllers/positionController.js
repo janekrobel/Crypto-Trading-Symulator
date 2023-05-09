@@ -14,9 +14,11 @@ exports.getPositionsById = (req, res) => {
 exports.createPositions = (req, res) => {
     if(req.body.amounts <= 0){
         res.send(false);
+        return 
     }
     if(req.body.type != "Short" && req.body.type != "Long"){
         res.send(false);
+        return 
     }
     userModel.getUserByEmail(req.email).then((user)=> {
         console.log("user" + user)
@@ -39,7 +41,7 @@ exports.createPositions = (req, res) => {
                 });
             }
             else{
-                res.send(false);
+                res.json({status : false});
             }
         });
        
@@ -89,8 +91,9 @@ exports.getTotalValue = (email) => {
                 userBalance = user.balance;
                 
             };
-            return {totalValue: Math.round(totalValue * 1000)/1000
-            , totalBalance : Math.round((totalValue + userBalance) * 1000)/1000};
+            return {
+                totalValue: Math.round(totalValue * 1000)/1000,
+                totalBalance : Math.round((totalValue + userBalance) * 1000)/1000};
             
         });
     })

@@ -7,48 +7,39 @@ exports.postLogin = (req, res) => {
     accountModel.getUserByEmail(req.body.email).then((result)=>{
         if(typeof(result) === 'undefined'){
             console.log("new");
-            accountModel.createUser(req.body.email).then((result)=>{
+            accountModel.createUser(req.body.email)
+        }
                 const email = req.body.email;
-                const now = new Date();
+                const now = new Date()
+                console.log("NOW: ", now)
+                
                 const date = now.toLocaleString('en-US', { timeZone: 'UTC' });
-                console.log(date);
+              
                 const token = jwt.sign({ email, date}, process.env.SECRETKEY);
                 const loginLink = `http://localhost:3001/login/link?key=${token}`;
                 emailController.sendLoginEmail(email, loginLink).then(() => {
                     res.redirect('/')
-                });
-            });
-        }
-        else{
-            const email = req.body.email;
-            const now = new Date();
-            const date = now.toLocaleString('en-US', { timeZone: 'UTC' });
-            console.log(date);
-            const token = jwt.sign({ email , date}, process.env.SECRETKEY);
-            const loginLink = `http://localhost:3001/login/link?key=${token}`;
-            emailController.sendLoginEmail(email, loginLink).then(() => {
-                res.redirect('/')
-            });
-        }           
+                });         
     });
 };
 
 exports.getLink = (req, res) => {
     const key = req.query.key;
     try {
-        const { email, date } = jwt.verify(key,process.env.SECRETKEY);
+        const { email, date } = jwt.verify(key, process.env.SECRETKEY);
         const now = new Date();
-        console.log(date);
-        const linkDate = new Date(Date.parse(date));
+            console.log("NOW DATE = " , now);
+        const linkDate = new Date(date);
+            console.log("LINK DATE Z PARSEM =", linkDate)
         const timeDiff = now.getTime() - linkDate.getTime();
-        console.log(timeDiff);
-        if(timeDiff > 72000000){
-            res.sendStatus(403);
-        }
-        else{
+            console.log("TIME DIFF = ", timeDiff);
+        if(timeDiff < 7200000){
             console.log("cookies");
             res.cookie('verification', key, { maxAge: 7200000 });
             res.redirect("/");
+        }
+        else{
+          res.sendStatus(403);
         }
     }
     catch(err){

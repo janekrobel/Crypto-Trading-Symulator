@@ -26,7 +26,7 @@ exports.createCoin = (coin) => {
 exports.setCoin = (coin) => {
     return db.promise().query('UPDATE COIN SET price = ?, marketCap = ?, volumen24 = ?, priceChange = ? WHERE uuid = ?',[coin.price, coin.marketCap, coin.volume, coin.change, coin.uuid]).then((result, fields) => {
         console.log("DB: ", result[0]);
-        return result[0];
+        return result[0].info;
     })
     .catch(err => {
         console.log(err);

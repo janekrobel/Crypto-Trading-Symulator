@@ -1,16 +1,8 @@
 const model = require("../models/coinModel.js");
 
 
-exports.createCoin = (coin) => {
-    model.createCoin(coin).then((result)=>{});
-}
-
 exports.getAllCoins = (request, response) => {
     model.getAllCoins().then((result)=>{ response.json(result)});
-}
-
-exports.setCoin = (coin) => {
-    model.setCoin(coin).then((result)=>{ response.json(result)});
 }
 
 exports.getCoinById = (request, response) => {
@@ -22,3 +14,13 @@ exports.deleteCoin = (request,response) => {
         response.json(result);
     });
 }
+
+exports.createCoin = (coin) => {
+    model.createCoin(coin).then((result)=>{});
+}
+
+exports.setCoin = (coin) => {
+    model.setCoin(coin).then((result)=>{ });
+}
+
+

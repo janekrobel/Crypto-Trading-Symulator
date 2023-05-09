@@ -7,7 +7,7 @@
         <p class="title">Open a position:</p>
         <div id="panel" class="panel">
             <p id="availableBalance">Available Balance: <%=account.balance%></p>
-            <form method="post" id="position" class="tradeInput" action="/positions" onsubmit="validPosition()">
+            <form method="post" id="position" class="tradeInput" action="/positions" onsubmit="return validPosition()">
                 <select onchange="changeSelect()" name="coin_id" id="coin_id">
                     <% for (coin of coins) { %>
                         <option value="<%= coin.id %>"><%= coin.symbol %></option>
